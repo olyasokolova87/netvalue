@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
     <configuration default="false" name="ChargePointsApplication" type="SpringBootApplicationConfigurationType"
                    factoryName="Spring Boot" nameIsGenerated="true">
-        <module name="charge-vehicles"/>
+        <module name="charge-stations"/>
         <option name="SPRING_BOOT_MAIN_CLASS" value="nz.netvalue.ChargePointsApplication"/>
         <method v="2">
             <option name="Make" enabled="true"/>

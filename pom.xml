@@ -18,16 +18,14 @@
     <properties>
         <java.version>11</java.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <springfox.version>3.0.0</springfox.version>
+        <openapi.version>5.1.0</openapi.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -54,11 +52,34 @@
             <version>${mapstruct.version}</version>
         </dependency>
 
+        <!-- openapi tools dependency -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator-maven-plugin</artifactId>
+            <version>${openapi.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-oas</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.20</version>
+        </dependency>
+        <!-- openapi tools dependency -->
 
         <!--Testing dependency-->
         <dependency>
@@ -66,13 +87,73 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
         <!--Testing dependency-->
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                    <compilerArgs>
+                        <compilerArg>
+                            -Amapstruct.defaultComponentModel=spring
+                        </compilerArg>
+                        <compilerArg>
+                            -Amapstruct.defaultInjectionStrategy=constructor
+                        </compilerArg>
+                    </compilerArgs>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi/openapi.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <output>${basedir}/target/generated-sources</output>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <library>spring-boot</library>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <apiPackage>nz.netvalue.controller</apiPackage>
+                            <modelPackage>nz.netvalue.controller.dto</modelPackage>
+                            <invokerPackage>nz.netvalue.controller.invoker</invokerPackage>
+
+                            <configOptions>
+                                <java8>false</java8>
+                                <dateLibrary>java8</dateLibrary>
+                                <sourceFolder>src/gen/main/java</sourceFolder>
+                                <interfaceOnly>false</interfaceOnly>
+                                <openApiNullable>false</openApiNullable>
+                                <delegatePattern>true</delegatePattern>
+                                <sourceFolder>src/gen/java/main</sourceFolder>
+                                <booleanGetterPrefix>is</booleanGetterPrefix>
+                            </configOptions>
+                            <globalProperties>
+                                <skipFormModel>false</skipFormModel>
+                            </globalProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
 

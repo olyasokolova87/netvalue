@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "title": "VersionResponseDto",
+  "description": "Response with application version information",
+  "properties": {
+    "database": {
+      "type": "string",
+      "maxLength": 25
+    },
+    "application": {
+      "type": "string",
+      "maxLength": 25
+    }
+  },
+  "required": [
+    "database",
+    "application"
+  ]
+}

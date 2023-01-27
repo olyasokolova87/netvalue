@@ -7,9 +7,13 @@ spring:
   h2:
     console:
       enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none
 jpa:
   show-sql: true
   database-platform: org.hibernate.dialect.H2Dialect
+
 hibernate:
   ddl-auto: 'none'
   show_sql: true
