@@ -1,6 +1,6 @@
 package nz.netvalue.controller;
 
-import nz.netvalue.controller.dto.VersionResponseDto;
+import nz.netvalue.controller.dto.VersionResponse;
 import nz.netvalue.controller.mapper.VersionMapper;
 import nz.netvalue.domain.model.version.Version;
 import nz.netvalue.domain.service.VersionService;
@@ -34,8 +34,8 @@ class VersionsApiDelegateImplTest {
     @DisplayName("Get version API should return Version obejct")
     void shouldGetVersionResponse() {
         when(versionService.get()).thenReturn(new Version());
-        when(versionMapper.toResponse(any())).thenReturn(new VersionResponseDto());
-        ResponseEntity<VersionResponseDto> actual = sut.getVersion();
+        when(versionMapper.toResponse(any())).thenReturn(new VersionResponse());
+        ResponseEntity<VersionResponse> actual = sut.getVersion();
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertNotNull(actual.getBody());

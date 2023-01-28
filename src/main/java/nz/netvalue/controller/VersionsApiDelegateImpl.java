@@ -1,6 +1,6 @@
 package nz.netvalue.controller;
 
-import nz.netvalue.controller.dto.VersionResponseDto;
+import nz.netvalue.controller.dto.VersionResponse;
 import nz.netvalue.controller.mapper.VersionMapper;
 import nz.netvalue.domain.service.VersionService;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,8 @@ public class VersionsApiDelegateImpl implements VersionsApiDelegate {
     }
 
     @Override
-    public ResponseEntity<VersionResponseDto> getVersion() {
-        VersionResponseDto dto = versionMapper.toResponse(versionService.get());
+    public ResponseEntity<VersionResponse> getVersion() {
+        VersionResponse dto = versionMapper.toResponse(versionService.get());
         return ResponseEntity.ok(dto);
     }
 }

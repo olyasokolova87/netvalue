@@ -1,6 +1,6 @@
 package nz.netvalue.controller.mapper;
 
-import nz.netvalue.controller.dto.VersionResponseDto;
+import nz.netvalue.controller.dto.VersionResponse;
 import nz.netvalue.domain.model.version.Version;
 import org.mapstruct.Mapper;
 
@@ -9,5 +9,5 @@ import org.mapstruct.Mapper;
  */
 @Mapper
 public interface VersionMapper {
-    VersionResponseDto toResponse(Version version);
+    VersionResponse toResponse(Version version);
 }

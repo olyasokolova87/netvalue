@@ -10,3 +10,5 @@ paths:
     $ref: operation/versions.yaml
   /charge-points/{serialNumber}/connectors:
     $ref: operation/charge-points-add-connector.yaml
+  /charging-sessions:
+    $ref: operation/charging-sessions.yaml

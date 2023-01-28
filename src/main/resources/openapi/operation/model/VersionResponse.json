@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "VersionResponseDto",
+  "title": "VersionResponse",
   "description": "Response with application version information",
   "properties": {
     "database": {

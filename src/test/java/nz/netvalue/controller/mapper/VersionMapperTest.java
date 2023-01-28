@@ -1,6 +1,6 @@
 package nz.netvalue.controller.mapper;
 
-import nz.netvalue.controller.dto.VersionResponseDto;
+import nz.netvalue.controller.dto.VersionResponse;
 import nz.netvalue.domain.model.version.Version;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ class VersionMapperTest {
     void shouldMapVersionToResponse() {
         Version version = createVersion();
 
-        VersionResponseDto actual = sut.toResponse(version);
+        VersionResponse actual = sut.toResponse(version);
         assertNotNull(actual);
         assertEquals(EXPECTED_APP, actual.getApplication());
         assertEquals(EXPECTED_DB, actual.getDatabase());
