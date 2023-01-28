@@ -1,0 +1,10 @@
+get:
+  operationId: getVersion
+  description: "Get application version information"
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: 'model/VersionResponseDto.json'

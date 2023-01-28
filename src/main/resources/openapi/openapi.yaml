@@ -7,13 +7,6 @@ info:
 paths:
 
   /versions:
-    get:
-      operationId: getVersion
-      description: "Get application version information"
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: 'model/VersionResponseDto.json'
+    $ref: operation/versions.yaml
+  /charge-points/{serialNumber}/connectors:
+    $ref: operation/charge-points-add-connector.yaml

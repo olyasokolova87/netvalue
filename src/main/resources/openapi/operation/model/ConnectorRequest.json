@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "title": "ConnectorRequest.json",
+  "description": "Request with connector",
+  "properties": {
+    "connectorNumber": {
+      "type": "integer",
+      "format": "int64",
+      "min": 0
+    }
+  },
+  "required": [
+    "number"
+  ]
+}

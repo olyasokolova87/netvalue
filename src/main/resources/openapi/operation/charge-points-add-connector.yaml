@@ -1,0 +1,19 @@
+post:
+  parameters:
+    - in: path
+      name: serialNumber
+      required: true
+      schema:
+        type: string
+  operationId: addConnector
+  description: "Add connector to existing charge point"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'model/ConnectorRequest.json'
+  responses:
+    201:
+      description: Charge connector created
+    404:
+      description: Charge point not found
