@@ -1,4 +1,4 @@
-### Send POST request with json body
+### Send PUT request: end charging session
 PUT http://localhost:8080/charging-sessions
 Accept: application/json
 Content-Type: application/json

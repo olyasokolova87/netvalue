@@ -1,4 +1,4 @@
-### Send POST request with json body
+### Send POST request: add charge connector
 POST http://localhost:8080/charge-points/number1/connectors
 Accept: application/json
 Content-Type: application/json
