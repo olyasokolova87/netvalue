@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -18,13 +18,14 @@ public interface ChargingSessionRepository extends JpaRepository<ChargingSession
     /**
      * Search charging sessions in period
      *
-     * @param startDate start period date
-     * @param endDate   end period date
+     * @param startPeriod start period date
+     * @param endPeriod   end period date
      * @return list of charging sessions
      */
     @Query("select c from ChargingSession c " +
-            "where (:startDate is not null or c.startTime >= :startDate) " +
-            "and (:endDate is not null or c.endTime <= :endDate)")
-    List<ChargingSession> findByDatePeriod(@Param("startDate") LocalDate startDate,
-                                           @Param("endDate") LocalDate endDate);
+            "where :startPeriod is null or " +
+            "(c.startTime between :startPeriod and :endPeriod " +
+            "and (c.endTime is null or c.endTime between :startPeriod and :endPeriod))")
+    List<ChargingSession> findByDatePeriod(@Param("startPeriod") LocalDateTime startPeriod,
+                                           @Param("endPeriod") LocalDateTime endPeriod);
 }

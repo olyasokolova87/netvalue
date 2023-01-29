@@ -1,4 +1,9 @@
-### Send POST request with json body
+### Send GET request: get all charging sessions
 GET http://localhost:8080/charging-sessions
+Accept: application/json
+Content-Type: application/json
+
+### Send GET request: get charging sessions with filter by period
+GET http://localhost:8080/charging-sessions?dateFrom=2022-01-01&dateTo=2022-01-02
 Accept: application/json
 Content-Type: application/json

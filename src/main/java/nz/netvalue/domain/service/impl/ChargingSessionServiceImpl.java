@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,13 +38,10 @@ public class ChargingSessionServiceImpl implements ChargingSessionService {
     }
 
     @Override
-    public List<ChargingSession> getChargeSessions(LocalDate dateFrom,
-                                                   LocalDate dateTo) {
-        if (dateFrom == null && dateTo == null) {
-            return repository.findAll();
-        } else {
-            return repository.findByDatePeriod(dateFrom, dateTo);
-        }
+    public List<ChargingSession> getChargeSessions(LocalDate dateFrom, LocalDate dateTo) {
+        LocalDateTime startPeriod = dateFrom != null ? dateFrom.atStartOfDay() : null;
+        LocalDate endDate = dateTo != null ? dateTo : LocalDate.now();
+        return repository.findByDatePeriod(startPeriod, endDate.atTime(LocalTime.MAX));
     }
 
     @Override
@@ -64,7 +63,7 @@ public class ChargingSessionServiceImpl implements ChargingSessionService {
     public void endSession(EndSessionRequest request) {
         ChargingSession session = getSessionById(request.getSessionId());
 
-        if (session.getEndTime().equals(request.getDateTime())) {
+        if (session.getEndTime() != null && session.getEndTime().equals(request.getDateTime())) {
             //already finished, just return
             return;
         }

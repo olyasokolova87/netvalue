@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -57,21 +58,23 @@ class ChargingSessionServiceImplTest {
     private ArgumentCaptor<ChargeConnector> connectorCaptor;
 
     @Test
-    @DisplayName("Call find all sessions method if date period not filled")
-    void shouldCallFindAll() {
-        sut.getChargeSessions(null, null);
-
-        verify(repository).findAll();
-    }
-
-    @Test
-    @DisplayName("Call find by date period method, if date period filled")
+    @DisplayName("Should find by passed period")
     void shouldCallFindByDatePeriod() {
         LocalDate dateFrom = LocalDate.now().minusDays(1);
         LocalDate dateTo = LocalDate.now();
         sut.getChargeSessions(dateFrom, dateTo);
 
-        verify(repository).findByDatePeriod(dateFrom, dateTo);
+        verify(repository).findByDatePeriod(dateFrom.atStartOfDay(), dateTo.atTime(LocalTime.MAX));
+    }
+
+    @Test
+    @DisplayName("Should find by period if dateTo is null")
+    void shouldCallFindByPeriodIfDateToIsNull() {
+        LocalDate dateFrom = LocalDate.now().minusDays(1);
+        sut.getChargeSessions(dateFrom, null);
+
+        verify(repository).findByDatePeriod(dateFrom.atStartOfDay(),
+                LocalDate.now().atTime(LocalTime.MAX));
     }
 
     @Test
