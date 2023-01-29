@@ -4,7 +4,7 @@ import nz.netvalue.domain.service.ChargeConnectorService;
 import nz.netvalue.domain.service.ChargePointService;
 import nz.netvalue.persistence.model.ChargeConnector;
 import nz.netvalue.persistence.model.ChargePoint;
-import nz.netvalue.persistence.model.repository.ChargeConnectorRepository;
+import nz.netvalue.persistence.repository.ChargeConnectorRepository;
 import org.springframework.stereotype.Service;
 
 @Service

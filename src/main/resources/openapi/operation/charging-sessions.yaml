@@ -1,0 +1,25 @@
+get:
+  parameters:
+    - in: query
+      name: dateFrom
+      description: Start period
+      schema:
+        type: string
+        format: date
+    - in: query
+      name: dateTo
+      description: End period
+      schema:
+        type: string
+        format: date
+  operationId: getChargeSessions
+  description: "Get charging session list with filtering by date"
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: 'model/ChargingSessionResponse.json'

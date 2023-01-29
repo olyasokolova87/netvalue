@@ -1,0 +1,4 @@
+### Send POST request with json body
+GET http://localhost:8080/charging-sessions
+Accept: application/json
+Content-Type: application/json

@@ -5,6 +5,7 @@ post:
       required: true
       schema:
         type: string
+        maxLength: 100
   operationId: addConnector
   description: "Add connector to existing charge point"
   requestBody:

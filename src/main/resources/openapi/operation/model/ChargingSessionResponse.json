@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "title": "ChargingSessionResponse",
+  "description": "Response with charging session",
+  "properties": {
+    "rfIdTag": {
+      "type": "object",
+      "description": "RFID tag",
+      "properties": {
+        "tagName": {
+          "type": "string"
+        },
+        "tagNumber": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tagName",
+        "tagNumber"
+      ]
+    },
+    "chargeConnector": {
+      "type": "object",
+      "description": "Charge connector",
+      "properties": {
+        "connectorNumber": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "meterValue": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "connectorNumber",
+        "meterValue"
+      ]
+    },
+    "startTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "endTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "errorMessage": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "rfIdTag",
+    "connector",
+    "startDate"
+  ]
+}

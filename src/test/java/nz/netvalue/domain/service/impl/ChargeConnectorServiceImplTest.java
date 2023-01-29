@@ -3,7 +3,7 @@ package nz.netvalue.domain.service.impl;
 import nz.netvalue.domain.service.ChargePointService;
 import nz.netvalue.persistence.model.ChargeConnector;
 import nz.netvalue.persistence.model.ChargePoint;
-import nz.netvalue.persistence.model.repository.ChargeConnectorRepository;
+import nz.netvalue.persistence.repository.ChargeConnectorRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
