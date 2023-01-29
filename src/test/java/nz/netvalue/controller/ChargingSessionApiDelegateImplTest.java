@@ -1,7 +1,9 @@
 package nz.netvalue.controller;
 
 import nz.netvalue.controller.dto.ChargingSessionResponse;
+import nz.netvalue.controller.dto.StartSessionRequest;
 import nz.netvalue.controller.mapper.ChargingSessionMapper;
+import nz.netvalue.controller.utils.LocationBuilder;
 import nz.netvalue.domain.service.ChargingSessionService;
 import nz.netvalue.persistence.model.ChargingSession;
 import org.junit.jupiter.api.DisplayName;
@@ -12,17 +14,22 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = ChargingSessionApiDelegateImpl.class)
 class ChargingSessionApiDelegateImplTest {
+
+    private static final String SOME_URI = "some/uri";
 
     @Autowired
     private ChargingSessionApiDelegateImpl sut;
@@ -32,6 +39,9 @@ class ChargingSessionApiDelegateImplTest {
 
     @MockBean
     private ChargingSessionMapper mapper;
+
+    @MockBean
+    private LocationBuilder locationBuilder;
 
     @Test
     @DisplayName("Get list of charging sessions")
@@ -48,5 +58,21 @@ class ChargingSessionApiDelegateImplTest {
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertNotNull(actual.getBody());
         assertEquals(1, actual.getBody().size());
+    }
+
+    @Test
+    @DisplayName("Create charging session successfully")
+    void shouldCreateNewSession() throws URISyntaxException {
+        StartSessionRequest request = new StartSessionRequest();
+        when(service.createSession(request)).thenReturn(new ChargingSession());
+        when(locationBuilder.build(any())).thenReturn(new URI(SOME_URI));
+
+        ResponseEntity<Void> actual = sut.startSession(request);
+
+        assertEquals(HttpStatus.CREATED, actual.getStatusCode());
+        List<String> headers = actual.getHeaders().get("Location");
+        assertNotNull(headers);
+        assertEquals(1, headers.size());
+        assertEquals(SOME_URI, headers.get(0));
     }
 }

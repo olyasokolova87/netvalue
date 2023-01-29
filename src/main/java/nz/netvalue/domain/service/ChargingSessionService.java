@@ -1,5 +1,6 @@
 package nz.netvalue.domain.service;
 
+import nz.netvalue.controller.dto.StartSessionRequest;
 import nz.netvalue.persistence.model.ChargingSession;
 
 import java.time.LocalDate;
@@ -18,4 +19,12 @@ public interface ChargingSessionService {
      * @return list of charging session
      */
     List<ChargingSession> getChargeSessions(LocalDate dateFrom, LocalDate dateTo);
+
+    /**
+     * Create charging session
+     *
+     * @param request start session request
+     * @return created session object
+     */
+    ChargingSession createSession(StartSessionRequest request);
 }

@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "title": "StartSessionRequest",
+  "description": "Request for start charging session",
+  "properties": {
+    "rfIdTagNumber": {
+      "type": "string",
+      "maxLength": 36,
+      "description": "RFID tag number"
+    },
+    "pointSerialNumber": {
+      "type": "string",
+      "maxlength": 100,
+      "description": "Charge point serial number"
+    },
+    "connectorNumber": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Charge connector number"
+    },
+    "dateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time when charging session starts"
+    }
+  },
+  "required": [
+    "rfIdTagNumber",
+    "pointSerialNumber",
+    "connectorNumber",
+    "dateTime"
+  ]
+}

@@ -15,4 +15,14 @@ public interface ChargeConnectorService {
      * @return created connector
      */
     ChargeConnector addConnectorToPoint(String serialNumber, Long connectorNumber);
+
+    /**
+     * Get charge connector by connectorNumber
+     *
+     * @param pointSerialNumber charge point serial number
+     * @param connectorNumber   charge connector number
+     * @return connector
+     * Can throw {@link nz.netvalue.domain.exception.ResourceNotFoundException} if charge connector not exists
+     */
+    ChargeConnector getConnector(String pointSerialNumber, Long connectorNumber);
 }

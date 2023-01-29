@@ -1,11 +1,16 @@
 package nz.netvalue.domain.service.impl;
 
+import nz.netvalue.domain.exception.ResourceNotFoundException;
 import nz.netvalue.domain.service.ChargeConnectorService;
 import nz.netvalue.domain.service.ChargePointService;
 import nz.netvalue.persistence.model.ChargeConnector;
 import nz.netvalue.persistence.model.ChargePoint;
 import nz.netvalue.persistence.repository.ChargeConnectorRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+import static java.lang.String.format;
 
 @Service
 public class ChargeConnectorServiceImpl implements ChargeConnectorService {
@@ -25,6 +30,17 @@ public class ChargeConnectorServiceImpl implements ChargeConnectorService {
 
         ChargeConnector connector = createConnector(connectorNumber, chargePoint);
         return connectorRepository.save(connector);
+    }
+
+    @Override
+    public ChargeConnector getConnector(String pointSerialNumber, Long connectorNumber) {
+        Optional<ChargeConnector> optional =
+                connectorRepository.findInPointByConnectorNumber(pointSerialNumber, connectorNumber);
+        if (optional.isEmpty()) {
+            String message = format("Charge connector with number = [%s] not exists", connectorNumber);
+            throw new ResourceNotFoundException(message);
+        }
+        return optional.get();
     }
 
     private static ChargeConnector createConnector(Long connectorNumber,

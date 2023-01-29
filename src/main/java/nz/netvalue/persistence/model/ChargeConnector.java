@@ -24,7 +24,7 @@ public class ChargeConnector {
     private Long connectorNumber;
 
     /**
-     * The meter value of charges kWh of energy
+     * The meter value of charges Wh of energy
      */
     @Column(name = "meter_value", nullable = false)
     private Integer meterValue;

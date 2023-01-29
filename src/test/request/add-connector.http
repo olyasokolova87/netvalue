@@ -4,5 +4,5 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "connectorNumber": "1"
+  "connectorNumber": 1
 }

@@ -7,10 +7,16 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * Repository for charge connector points
+ * Repository works with charge points
  */
 @Repository
 public interface ChargePointRepository extends JpaRepository<ChargePoint, Long> {
 
+    /**
+     * Search charge point by serial number
+     *
+     * @param serialNumber charge point serial number
+     * @return found charge point or null
+     */
     Optional<ChargePoint> findBySerialNumber(String serialNumber);
 }

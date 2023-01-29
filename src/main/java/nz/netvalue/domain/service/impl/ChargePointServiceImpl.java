@@ -23,8 +23,8 @@ public class ChargePointServiceImpl implements ChargePointService {
     public ChargePoint getChargePoint(String serialNumber) {
         Optional<ChargePoint> optional = chargePointRepository.findBySerialNumber(serialNumber);
         if (optional.isEmpty()) {
-            throw new ResourceNotFoundException(
-                    format("Charge point with serialNumber [%s] not exists", serialNumber));
+            String message = format("Charge point with serial number = [%s] not exists", serialNumber);
+            throw new ResourceNotFoundException(message);
         }
         return optional.get();
     }

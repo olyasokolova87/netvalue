@@ -12,7 +12,7 @@ public interface ChargePointService {
      *
      * @param serialNumber serial number
      * @return charge point
-     * can throw ResourceNotFoundException if charge point not exists
+     * If charge point not exists, throws {@link nz.netvalue.domain.exception.ResourceNotFoundException}
      */
     ChargePoint getChargePoint(String serialNumber);
 }

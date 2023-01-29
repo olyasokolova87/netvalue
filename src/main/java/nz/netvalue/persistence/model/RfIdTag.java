@@ -1,6 +1,7 @@
 package nz.netvalue.persistence.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -34,7 +35,8 @@ public class RfIdTag {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(name = "tag_number", nullable = false)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    @Column(name = "tag_number", columnDefinition = "CHAR(36)", nullable = false)
     private UUID tagNumber;
 
     /**

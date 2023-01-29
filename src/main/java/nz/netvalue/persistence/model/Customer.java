@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Customer that use charge point
  */
 @Entity
-@Table(name = "consumer")
+@Table(name = "customer")
 public class Customer {
 
     /**

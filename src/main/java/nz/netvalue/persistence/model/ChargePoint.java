@@ -26,7 +26,7 @@ public class ChargePoint {
     /**
      * Charge point serial number
      */
-    @Column(name = "serialNumber", nullable = false)
+    @Column(name = "serial_number", nullable = false)
     private String serialNumber;
 
     public Long getId() {

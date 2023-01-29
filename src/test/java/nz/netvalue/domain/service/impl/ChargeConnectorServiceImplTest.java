@@ -1,5 +1,6 @@
 package nz.netvalue.domain.service.impl;
 
+import nz.netvalue.domain.exception.ResourceNotFoundException;
 import nz.netvalue.domain.service.ChargePointService;
 import nz.netvalue.persistence.model.ChargeConnector;
 import nz.netvalue.persistence.model.ChargePoint;
@@ -12,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,5 +51,27 @@ class ChargeConnectorServiceImplTest {
 
         verify(connectorRepository).save(connectorCaptor.capture());
         assertEquals(chargePoint, connectorCaptor.getValue().getChargePoint());
+    }
+
+    @Test
+    @DisplayName("Throws when connector with number not exists")
+    void shouldThrowsIfConnectorNotFound() {
+        when(connectorRepository.findInPointByConnectorNumber(SERIAL_NUMBER, CONNECTOR_NUMBER)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> sut.getConnector(SERIAL_NUMBER, CONNECTOR_NUMBER));
+    }
+
+    @Test
+    @DisplayName("Return connector is exists")
+    void shouldGetByNumberIfExists() {
+        ChargeConnector expected = new ChargeConnector();
+        expected.setConnectorNumber(CONNECTOR_NUMBER);
+
+        when(connectorRepository.findInPointByConnectorNumber(SERIAL_NUMBER, CONNECTOR_NUMBER))
+                .thenReturn(Optional.of(expected));
+
+        ChargeConnector actual = sut.getConnector(SERIAL_NUMBER, CONNECTOR_NUMBER);
+        assertEquals(CONNECTOR_NUMBER, actual.getConnectorNumber());
     }
 }

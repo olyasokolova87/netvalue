@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "ConnectorRequest.json",
+  "title": "ConnectorRequest",
   "description": "Request with connector",
   "properties": {
     "connectorNumber": {

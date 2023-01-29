@@ -28,7 +28,7 @@ class ChargePointsApiDelegateImplTest {
     private static final long CONNECTOR_NUMBER = 1L;
     private static final String SERIAL_NUMBER = "1";
     private static final long ID = 2L;
-    public static final String SOME_URI = "some/uri";
+    private static final String SOME_URI = "some/uri";
 
     @Autowired
     private ChargePointsApiDelegateImpl sut;
