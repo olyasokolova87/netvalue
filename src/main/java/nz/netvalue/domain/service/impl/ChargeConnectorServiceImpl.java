@@ -43,6 +43,12 @@ public class ChargeConnectorServiceImpl implements ChargeConnectorService {
         return optional.get();
     }
 
+    @Override
+    public void updateMeterValue(ChargeConnector connector, Integer meterValue) {
+        connector.setMeterValue(meterValue);
+        connectorRepository.save(connector);
+    }
+
     private static ChargeConnector createConnector(Long connectorNumber,
                                                    ChargePoint chargePoint) {
         ChargeConnector connector = new ChargeConnector();

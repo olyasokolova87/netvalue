@@ -74,4 +74,15 @@ class ChargeConnectorServiceImplTest {
         ChargeConnector actual = sut.getConnector(SERIAL_NUMBER, CONNECTOR_NUMBER);
         assertEquals(CONNECTOR_NUMBER, actual.getConnectorNumber());
     }
+
+    @Test
+    @DisplayName("Save charge connector with new meter value")
+    void shouldSaveWithNewMeterValue() {
+        ChargeConnector connector = new ChargeConnector();
+        int expectedMeterValue = 15;
+        sut.updateMeterValue(connector, expectedMeterValue);
+
+        verify(connectorRepository).save(connectorCaptor.capture());
+        assertEquals(expectedMeterValue, connectorCaptor.getValue().getMeterValue());
+    }
 }

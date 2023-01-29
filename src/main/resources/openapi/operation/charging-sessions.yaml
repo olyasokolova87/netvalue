@@ -35,3 +35,19 @@ post:
   responses:
     201:
       description: Created
+    404:
+      description: Connector not found
+
+put:
+  operationId: endSession
+  description: "End charging session"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: 'model/EndSessionRequest.json'
+  responses:
+    200:
+      description: OK
+    404:
+      description: Session not found

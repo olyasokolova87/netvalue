@@ -25,4 +25,12 @@ public interface ChargeConnectorService {
      * Can throw {@link nz.netvalue.domain.exception.ResourceNotFoundException} if charge connector not exists
      */
     ChargeConnector getConnector(String pointSerialNumber, Long connectorNumber);
+
+    /**
+     * Update meter value in charge connector
+     *
+     * @param connector  charge connector
+     * @param meterValue new value of meter
+     */
+    void updateMeterValue(ChargeConnector connector, Integer meterValue);
 }

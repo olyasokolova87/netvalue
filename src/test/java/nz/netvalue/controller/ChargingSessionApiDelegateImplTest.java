@@ -1,6 +1,7 @@
 package nz.netvalue.controller;
 
 import nz.netvalue.controller.dto.ChargingSessionResponse;
+import nz.netvalue.controller.dto.EndSessionRequest;
 import nz.netvalue.controller.dto.StartSessionRequest;
 import nz.netvalue.controller.mapper.ChargingSessionMapper;
 import nz.netvalue.controller.utils.LocationBuilder;
@@ -64,7 +65,7 @@ class ChargingSessionApiDelegateImplTest {
     @DisplayName("Create charging session successfully")
     void shouldCreateNewSession() throws URISyntaxException {
         StartSessionRequest request = new StartSessionRequest();
-        when(service.createSession(request)).thenReturn(new ChargingSession());
+        when(service.startSession(request)).thenReturn(new ChargingSession());
         when(locationBuilder.build(any())).thenReturn(new URI(SOME_URI));
 
         ResponseEntity<Void> actual = sut.startSession(request);
@@ -74,5 +75,14 @@ class ChargingSessionApiDelegateImplTest {
         assertNotNull(headers);
         assertEquals(1, headers.size());
         assertEquals(SOME_URI, headers.get(0));
+    }
+
+    @Test
+    @DisplayName("End charging session successfully")
+    void shouldEndSession() {
+        EndSessionRequest request = new EndSessionRequest();
+        ResponseEntity<Void> actual = sut.endSession(request);
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
     }
 }

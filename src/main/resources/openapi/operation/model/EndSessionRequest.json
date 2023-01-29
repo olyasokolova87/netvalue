@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "title": "EndSessionRequest",
+  "description": "Request for end charging session",
+  "properties": {
+    "sessionId": {
+      "type": "integer",
+      "format": "int64",
+      "min": 0
+    },
+    "dateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "meterValue": {
+      "type": "integer",
+      "min": 0
+    }
+  },
+  "required": [
+    "number"
+  ]
+}

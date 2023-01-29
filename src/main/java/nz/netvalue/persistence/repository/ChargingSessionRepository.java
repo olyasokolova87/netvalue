@@ -23,8 +23,8 @@ public interface ChargingSessionRepository extends JpaRepository<ChargingSession
      * @return list of charging sessions
      */
     @Query("select c from ChargingSession c " +
-            "where (:startDate is not null or c.startTime >= :startTime) " +
-            "and (:startDate is not null or c.endTime <= :endTime)")
+            "where (:startDate is not null or c.startTime >= :startDate) " +
+            "and (:endDate is not null or c.endTime <= :endDate)")
     List<ChargingSession> findByDatePeriod(@Param("startDate") LocalDate startDate,
                                            @Param("endDate") LocalDate endDate);
 }

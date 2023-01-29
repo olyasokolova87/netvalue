@@ -1,6 +1,7 @@
 package nz.netvalue.controller;
 
 import nz.netvalue.controller.dto.ChargingSessionResponse;
+import nz.netvalue.controller.dto.EndSessionRequest;
 import nz.netvalue.controller.dto.StartSessionRequest;
 import nz.netvalue.controller.mapper.ChargingSessionMapper;
 import nz.netvalue.controller.utils.LocationBuilder;
@@ -38,8 +39,14 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
 
     @Override
     public ResponseEntity<Void> startSession(StartSessionRequest request) {
-        ChargingSession created = chargingSessionService.createSession(request);
+        ChargingSession created = chargingSessionService.startSession(request);
         URI location = locationBuilder.build(created.getId());
         return ResponseEntity.created(location).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> endSession(EndSessionRequest request) {
+        chargingSessionService.endSession(request);
+        return ResponseEntity.ok().build();
     }
 }

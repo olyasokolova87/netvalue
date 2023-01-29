@@ -1,5 +1,6 @@
 package nz.netvalue.domain.service;
 
+import nz.netvalue.controller.dto.EndSessionRequest;
 import nz.netvalue.controller.dto.StartSessionRequest;
 import nz.netvalue.persistence.model.ChargingSession;
 
@@ -26,5 +27,12 @@ public interface ChargingSessionService {
      * @param request start session request
      * @return created session object
      */
-    ChargingSession createSession(StartSessionRequest request);
+    ChargingSession startSession(StartSessionRequest request);
+
+    /**
+     * End charging session
+     *
+     * @param request end session request
+     */
+    void endSession(EndSessionRequest request);
 }
