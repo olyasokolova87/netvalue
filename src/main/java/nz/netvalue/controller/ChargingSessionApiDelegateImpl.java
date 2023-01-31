@@ -8,6 +8,7 @@ import nz.netvalue.controller.utils.LocationBuilder;
 import nz.netvalue.domain.service.ChargingSessionService;
 import nz.netvalue.persistence.model.ChargingSession;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
@@ -30,6 +31,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ChargingSessionResponse>> getChargeSessions(LocalDate dateFrom, LocalDate dateTo) {
         List<ChargingSession> sessions = chargingSessionService.getChargeSessions(dateFrom, dateTo);
 
@@ -38,6 +40,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
     }
 
     @Override
+    @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<Void> startSession(StartSessionRequest request) {
         ChargingSession created = chargingSessionService.startSession(request);
         URI location = locationBuilder.build(created.getId());
@@ -45,6 +48,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
     }
 
     @Override
+    @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<Void> endSession(EndSessionRequest request) {
         chargingSessionService.endSession(request);
         return ResponseEntity.ok().build();

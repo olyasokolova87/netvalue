@@ -9,7 +9,7 @@ spring:
       enabled: true
   jpa:
     show_sql: true
-    defer-datasource-initialization: true
+    defer-datasource-initialization: false
     hibernate:
       ddl-auto: none
       generate_statistics: false

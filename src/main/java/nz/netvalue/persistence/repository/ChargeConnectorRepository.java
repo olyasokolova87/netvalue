@@ -21,7 +21,7 @@ public interface ChargeConnectorRepository extends JpaRepository<ChargeConnector
      * @param connectorNumber   charge connector number
      * @return found charge connector or null
      */
-    @Query(value = "select * from charge_point CP_ join charge_connector CC_ on CP_.id = CC_.charge_point_id " +
+    @Query(value = "select * from charge_points CP_ join charge_connectors CC_ on CP_.id = CC_.charge_point_id " +
             "where CC_.connector_number = :connectorNumber and CP_.serial_number = :pointNumber",
             nativeQuery = true)
     Optional<ChargeConnector> findInPointByConnectorNumber(@Param("pointNumber") String pointSerialNumber,

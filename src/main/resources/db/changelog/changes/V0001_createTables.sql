@@ -1,105 +1,126 @@
-create table customer
+create table roles
 (
-    id identity not null primary key,
-    customer_name varchar(255) not null
+    id        identity    not null primary key,
+    role_name varchar(15) not null unique
 );
 comment
-on table customer is 'Customer that use charge point';
+    on table roles is 'User roles';
 comment
-on column customer.id is 'Customer ID';
+    on column roles.id is 'User role ID';
 comment
-on column customer.customer_name is 'Customer name';
+    on column roles.role_name is 'Unique user role name';
 
-create table vehicle
+create table users
 (
-    id identity not null primary key,
+    id            identity     not null primary key,
+    role_id       int          not null references roles (id),
+    name          varchar(300) not null,
+    username      varchar(40)  not null unique,
+    user_password varchar(72)  not null
+);
+comment
+    on table users is 'Users';
+comment
+    on column users.id is 'User ID';
+comment
+    on column users.role_id is 'ID of user role';
+comment
+    on column users.name is 'User name';
+comment
+    on column users.username is 'Unique user login';
+comment
+    on column users.user_password is 'encrypted token';
+
+create table vehicles
+(
+    id                 identity     not null primary key,
     vehicle_name       varchar(255) not null,
     registration_plate varchar(15)  not null
 );
 comment
-on table vehicle is 'Vehicle that need to be charge';
+    on table vehicles is 'vehicles that need to be charge';
 comment
-on column vehicle.id is 'Vehicle ID';
+    on column vehicles.id is 'vehicle ID';
 comment
-on column vehicle.vehicle_name is 'Vehicles name';
+    on column vehicles.vehicle_name is 'vehicle name';
 comment
-on column vehicle.registration_plate is 'Vehicles registration plate';
+    on column vehicles.registration_plate is 'vehicle registration plate';
 
-create table rfid_tag
+create table rfid_tags
 (
-    id identity not null primary key,
+    id          identity     not null primary key,
     tag_name    varchar(255) not null,
     tag_number  varchar(40)  not null unique,
-    customer_id int references customer (id),
-    vehicle_id  int references vehicle (id)
+    customer_id int references users (id),
+    vehicle_id  int references vehicles (id)
 );
 comment
-on table rfid_tag is 'RFID tag that uses during the charge session of a vehicle';
+    on table rfid_tags is 'RFID tags that uses during the charge session of a vehicles';
 comment
-on column rfid_tag.id is 'RFID tag ID';
+    on column rfid_tags.id is 'RFID tag ID';
 comment
-on column rfid_tag.tag_name is 'RFID tag name';
+    on column rfid_tags.tag_name is 'RFID tag name';
 comment
-on column rfid_tag.tag_number is 'RFID tag global unique number';
+    on column rfid_tags.tag_number is 'RFID tag global unique number';
 comment
-on column rfid_tag.customer_id is 'Customer that owned RFID tag';
+    on column rfid_tags.customer_id is 'Customer that owned RFID tag';
 comment
-on column rfid_tag.vehicle_id is 'Linked vehicle to RFID tag';
+    on column rfid_tags.vehicle_id is 'Linked vehicles to RFID tag';
 
-create table charge_point
+create table charge_points
 (
-    id identity not null primary key,
+    id            identity     not null primary key,
     serial_number varchar(100) not null unique,
     point_name    varchar(255) not null
 );
 comment
-on table charge_point is 'Point where vehicle is charging';
+    on table charge_points is 'Points where vehicles is charging';
 comment
-on column charge_point.id is 'Charge point ID';
+    on column charge_points.id is 'Charge point ID';
 comment
-on column charge_point.point_name is 'Charge point name';
+    on column charge_points.point_name is 'Charge point name';
 comment
-on column charge_point.serial_number is 'Charge point serial number';
+    on column charge_points.serial_number is 'Charge point serial number';
 
-create table charge_connector
+create table charge_connectors
 (
-    id identity not null primary key,
+    id               identity     not null primary key,
     connector_number varchar(100) not null,
-    charge_point_id  int references charge_point (id),
+    charge_point_id  int references charge_points (id),
     meter_value      int          not null
 );
 comment
-on table charge_connector is 'Connector in charge point';
+    on table charge_connectors is 'Connectors in charge point';
 comment
-on column charge_connector.id is 'Charge connector ID';
+    on column charge_connectors.id is 'Charge connector ID';
 comment
-on column charge_connector.charge_point_id is 'Charge point that owns the connector';
+    on column charge_connectors.charge_point_id is 'Charge point that owns the connector';
 comment
-on column charge_connector.connector_number is 'Charge connector number in point';
+    on column charge_connectors.connector_number is 'Charge connector number in point';
 comment
-on column charge_connector.meter_value is 'The meter value of charges kWh of energy';
+    on column charge_connectors.meter_value is 'The meter value of charges kWh of energy';
 
-create table charging_session
+create table charging_sessions
 (
-    id identity not null primary key,
+    id                  identity  not null primary key,
     start_time          timestamp not null,
     end_time            timestamp,
-    charge_connector_id int references charge_connector (id),
-    rfid_tag_id         int references rfid_tag (id),
+    charge_connector_id int references charge_connectors (id),
+    rfid_tag_id         int references rfid_tags (id),
     error_message       varchar(500)
 );
 comment
-on table charging_session is 'Session of charge vehicle';
+    on table charging_sessions is 'Sessions of charging vehicles';
 comment
-on column charging_session.id is 'Session ID';
+    on column charging_sessions.id is 'Session ID';
 comment
-on column charging_session.start_time is 'Date and time when session starts';
+    on column charging_sessions.start_time is 'Date and time when session starts';
 comment
-on column charging_session.end_time is 'Date and time when session ends';
+    on column charging_sessions.end_time is 'Date and time when session ends';
 comment
-on column charging_session.charge_connector_id is 'Connection that used during the session';
+    on column charging_sessions.charge_connector_id is 'Connection that used during the session';
 comment
-on column charging_session.rfid_tag_id is 'RFID tag that used during the session';
+    on column charging_sessions.rfid_tag_id is 'RFID tag that used during the session';
 comment
-on column charging_session.error_message is 'Error message when charge session can not complete';
+    on column charging_sessions.error_message is 'Error message when charge session can not complete';
 

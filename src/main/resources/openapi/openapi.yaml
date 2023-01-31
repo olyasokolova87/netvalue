@@ -12,3 +12,9 @@ paths:
     $ref: operation/charge-points-add-connector.yaml
   /charging-sessions:
     $ref: operation/charging-sessions.yaml
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

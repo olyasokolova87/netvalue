@@ -3,10 +3,10 @@ package nz.netvalue.persistence.model;
 import javax.persistence.*;
 
 /**
- * Connector in charge point
+ * Connectors in charge point
  */
 @Entity
-@Table(name = "charge_connector")
+@Table(name = "charge_connectors")
 public class ChargeConnector {
 
     /**

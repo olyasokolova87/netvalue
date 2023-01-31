@@ -1,4 +1,6 @@
 get:
+  security:
+    - basicAuth: [ ]
   parameters:
     - in: query
       name: dateFrom
@@ -25,6 +27,8 @@ get:
               $ref: 'model/ChargingSessionResponse.json'
 
 post:
+  security:
+    - basicAuth: [ ]
   operationId: startSession
   description: "Start charging session"
   requestBody:
@@ -39,6 +43,8 @@ post:
       description: Connector not found
 
 put:
+  security:
+    - basicAuth: [ ]
   operationId: endSession
   description: "End charging session"
   requestBody:

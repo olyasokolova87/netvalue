@@ -3,11 +3,11 @@ package nz.netvalue.persistence.model;
 import javax.persistence.*;
 
 /**
- * Customer that use charge point
+ * User roles
  */
 @Entity
-@Table(name = "customer")
-public class Customer {
+@Table(name = "roles")
+public class Role {
 
     /**
      * Customer ID
@@ -20,8 +20,8 @@ public class Customer {
     /**
      * Customer name
      */
-    @Column(name = "customer_name", nullable = false)
-    private String customerName;
+    @Column(name = "role_name", nullable = false)
+    private String roleName;
 
     public Long getId() {
         return id;
@@ -31,11 +31,11 @@ public class Customer {
         this.id = id;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

@@ -2,6 +2,7 @@
 PUT http://localhost:8080/charging-sessions
 Accept: application/json
 Content-Type: application/json
+Authorization: Basic smirnova smirnova
 
 {
   "sessionId": "1",

@@ -1,4 +1,6 @@
 post:
+  security:
+    - basicAuth: [ ]
   parameters:
     - in: path
       name: serialNumber

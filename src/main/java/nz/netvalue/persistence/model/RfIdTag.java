@@ -7,10 +7,10 @@ import javax.persistence.*;
 import java.util.UUID;
 
 /**
- * RFID tag that uses during the charge session of a vehicle
+ * RFID tags that uses during the charge session of a vehicle
  */
 @Entity
-@Table(name = "rfid_tag")
+@Table(name = "rfid_tags")
 public class RfIdTag {
 
     /**
@@ -44,7 +44,7 @@ public class RfIdTag {
      */
     @OneToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    private User customer;
 
     /**
      * Linked vehicle to RFID tag
@@ -77,12 +77,12 @@ public class RfIdTag {
         this.tagNumber = tagNumber;
     }
 
-    public Customer getCustomer() {
+    public User getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomer(User user) {
+        this.customer = user;
     }
 
     public Vehicle getVehicle() {

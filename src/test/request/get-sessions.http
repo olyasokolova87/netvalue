@@ -2,8 +2,10 @@
 GET http://localhost:8080/charging-sessions
 Accept: application/json
 Content-Type: application/json
+Authorization: Basic admin smirnova
 
 ### Send GET request: get charging sessions with filter by period
-GET http://localhost:8080/charging-sessions?dateFrom=2022-01-01&dateTo=2022-01-02
+GET http://localhost:8080/charging-sessions?dateFrom=2022-01-01&dateTo=2024-01-02
 Accept: application/json
 Content-Type: application/json
+Authorization: Basic admin smirnova

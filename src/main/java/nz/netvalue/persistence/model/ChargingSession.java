@@ -4,10 +4,10 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Session of charge vehicle
+ * Sessions of charging vehicles
  */
 @Entity
-@Table(name = "charging_session")
+@Table(name = "charging_sessions")
 public class ChargingSession {
 
     /**

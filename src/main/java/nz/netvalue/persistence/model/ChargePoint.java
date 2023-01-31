@@ -3,10 +3,10 @@ package nz.netvalue.persistence.model;
 import javax.persistence.*;
 
 /**
- * Point where vehicle is charging
+ * Points where vehicles is charging
  */
 @Entity
-@Table(name = "charge_point")
+@Table(name = "charge_points")
 public class ChargePoint {
 
     /**

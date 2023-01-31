@@ -2,6 +2,7 @@
 POST http://localhost:8080/charging-sessions
 Accept: application/json
 Content-Type: application/json
+Authorization: Basic smirnova smirnova
 
 {
   "rfIdTagNumber": "9382134b-46f1-437f-b581-49c533a49661",

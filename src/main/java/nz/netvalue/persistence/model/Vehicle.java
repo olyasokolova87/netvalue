@@ -3,10 +3,10 @@ package nz.netvalue.persistence.model;
 import javax.persistence.*;
 
 /**
- * Vehicle that need to be charged
+ * Vehicles that need to be charged
  */
 @Entity
-@Table(name = "vehicle")
+@Table(name = "vehicles")
 public class Vehicle {
 
     /**
