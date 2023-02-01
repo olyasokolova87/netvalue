@@ -56,6 +56,24 @@
             <version>${mapstruct.version}</version>
         </dependency>
 
+        <!-- parse dates -->
+        <dependency>
+            <groupId>com.rubiconproject.oss</groupId>
+            <artifactId>jchronic</artifactId>
+            <version>0.2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ocpsoft.prettytime</groupId>
+            <artifactId>prettytime-nlp</artifactId>
+            <version>5.0.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+        <!-- parse dates -->
+
         <!-- openapi tools dependency -->
         <dependency>
             <groupId>org.openapitools</groupId>
