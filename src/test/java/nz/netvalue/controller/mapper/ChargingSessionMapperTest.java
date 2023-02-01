@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -33,17 +34,19 @@ class ChargingSessionMapperTest {
     @DisplayName("Map charging session list from for response correctly")
     void shouldMapResponseList() {
         ChargingSession chargingSession = createSession();
-        List<ChargingSessionResponse> actual = sut.toResponseList(Collections.singletonList(chargingSession));
+        List<ChargingSessionResponse> actualList = sut.toResponseList(Collections.singletonList(chargingSession));
 
-        assertEquals(1, actual.size());
-        ChargingSessionResponse chargingSessionResponse = actual.get(0);
-        assertNotNull(chargingSessionResponse.getRfIdTag());
-        assertNotNull(chargingSessionResponse.getChargeConnector());
-        assertEquals(CONNECTOR_NUMBER, chargingSessionResponse.getChargeConnector().getConnectorNumber());
-        assertEquals(TAG_NAME, chargingSessionResponse.getRfIdTag().getTagName());
-        assertEquals(TAG_NUMBER.toString(), chargingSessionResponse.getRfIdTag().getTagNumber());
-        assertEquals(START_TIME, chargingSessionResponse.getStartTime());
-        assertEquals(END_TIME, chargingSessionResponse.getEndTime());
+        assertEquals(1, actualList.size());
+        ChargingSessionResponse actualResponse = actualList.get(0);
+        assertNotNull(actualResponse.getRfIdTag());
+        assertNotNull(actualResponse.getChargeConnector());
+        assertEquals(CONNECTOR_NUMBER, actualResponse.getChargeConnector().getConnectorNumber());
+        assertEquals(TAG_NAME, actualResponse.getRfIdTag().getTagName());
+        assertEquals(TAG_NUMBER.toString(), actualResponse.getRfIdTag().getTagNumber());
+        assertEquals(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(START_TIME),
+                actualResponse.getStartTime());
+        assertEquals(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(END_TIME),
+                actualResponse.getEndTime());
     }
 
     private static ChargingSession createSession() {

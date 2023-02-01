@@ -1,6 +1,8 @@
 package nz.netvalue.persistence.repository;
 
 import nz.netvalue.persistence.model.ChargingSession;
+import nz.netvalue.persistence.model.RfIdTag;
+import nz.netvalue.persistence.model.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Repository works with charging sessions
@@ -28,4 +31,17 @@ public interface ChargingSessionRepository extends JpaRepository<ChargingSession
             "and (c.endTime is null or c.endTime between :startPeriod and :endPeriod))")
     List<ChargingSession> findByDatePeriod(@Param("startPeriod") LocalDateTime startPeriod,
                                            @Param("endPeriod") LocalDateTime endPeriod);
+
+    /**
+     * Search started charging session for RFID tag and vehicle
+     *
+     * @param rfIdTag RFID tag
+     * @param vehicle vehicle
+     * @return true, if vehicle have started charging with RFID tag
+     */
+    @Query("select c from ChargingSession c " +
+            "where c.rfIdTag = :rfIdTag and c.vehicle = :vehicle " +
+            "and c.endTime is null")
+    Optional<ChargingSession> findStartedSession(@Param("rfIdTag") RfIdTag rfIdTag,
+                                                 @Param("vehicle") Vehicle vehicle);
 }

@@ -25,6 +25,10 @@ get:
             type: array
             items:
               $ref: 'model/ChargingSessionResponse.json'
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
 
 post:
   security:
@@ -39,8 +43,14 @@ post:
   responses:
     201:
       description: Created
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
     404:
       description: Connector not found
+    409:
+      description: Session already started
 
 put:
   security:
@@ -55,5 +65,9 @@ put:
   responses:
     200:
       description: OK
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
     404:
       description: Session not found

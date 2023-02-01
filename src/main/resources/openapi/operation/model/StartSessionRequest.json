@@ -8,6 +8,11 @@
       "maxLength": 36,
       "description": "RFID tag number"
     },
+    "vehicleRegistrationPlate": {
+      "type": "string",
+      "maxLength": 15,
+      "description": "Vehicle registration plate"
+    },
     "pointSerialNumber": {
       "type": "string",
       "maxlength": 100,

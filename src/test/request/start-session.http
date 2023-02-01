@@ -6,6 +6,7 @@ Authorization: Basic smirnova smirnova
 
 {
   "rfIdTagNumber": "9382134b-46f1-437f-b581-49c533a49661",
+  "vehicleRegistrationPlate": "343-738",
   "pointSerialNumber": "number1",
   "connectorNumber": 1,
   "dateTime": "2022-01-01T12:00:00"

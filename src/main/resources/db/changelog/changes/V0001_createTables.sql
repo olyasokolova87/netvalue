@@ -35,7 +35,7 @@ create table vehicles
 (
     id                 identity     not null primary key,
     vehicle_name       varchar(255) not null,
-    registration_plate varchar(15)  not null
+    registration_plate varchar(15) not null unique
 );
 comment
     on table vehicles is 'vehicles that need to be charge';
@@ -51,8 +51,7 @@ create table rfid_tags
     id          identity     not null primary key,
     tag_name    varchar(255) not null,
     tag_number  varchar(40)  not null unique,
-    customer_id int references users (id),
-    vehicle_id  int references vehicles (id)
+    customer_id int references users (id)
 );
 comment
     on table rfid_tags is 'RFID tags that uses during the charge session of a vehicles';
@@ -64,8 +63,6 @@ comment
     on column rfid_tags.tag_number is 'RFID tag global unique number';
 comment
     on column rfid_tags.customer_id is 'Customer that owned RFID tag';
-comment
-    on column rfid_tags.vehicle_id is 'Linked vehicles to RFID tag';
 
 create table charge_points
 (
@@ -107,6 +104,7 @@ create table charging_sessions
     end_time            timestamp,
     charge_connector_id int references charge_connectors (id),
     rfid_tag_id         int references rfid_tags (id),
+    vehicle_id          int references vehicles (id),
     error_message       varchar(500)
 );
 comment
@@ -121,6 +119,8 @@ comment
     on column charging_sessions.charge_connector_id is 'Connection that used during the session';
 comment
     on column charging_sessions.rfid_tag_id is 'RFID tag that used during the session';
+comment
+    on column charging_sessions.vehicle_id is 'ID of charged vehicle';
 comment
     on column charging_sessions.error_message is 'Error message when charge session can not complete';
 

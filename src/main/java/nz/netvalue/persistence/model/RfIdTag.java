@@ -46,13 +46,6 @@ public class RfIdTag {
     @JoinColumn(name = "customer_id", nullable = false)
     private User customer;
 
-    /**
-     * Linked vehicle to RFID tag
-     */
-    @OneToOne
-    @JoinColumn(name = "vehicle_id", nullable = false)
-    private Vehicle vehicle;
-
     public Long getId() {
         return id;
     }
@@ -81,15 +74,7 @@ public class RfIdTag {
         return customer;
     }
 
-    public void setCustomer(User user) {
-        this.customer = user;
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setCustomer(User customer) {
+        this.customer = customer;
     }
 }

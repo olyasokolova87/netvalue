@@ -3,12 +3,15 @@ package nz.netvalue.domain.service.impl;
 import nz.netvalue.controller.dto.EndSessionRequest;
 import nz.netvalue.controller.dto.StartSessionRequest;
 import nz.netvalue.domain.exception.ResourceNotFoundException;
+import nz.netvalue.domain.exception.SessionAlreadyStartedException;
 import nz.netvalue.domain.service.ChargeConnectorService;
 import nz.netvalue.domain.service.ChargingSessionService;
 import nz.netvalue.domain.service.RfidTagService;
+import nz.netvalue.domain.service.VehicleService;
 import nz.netvalue.persistence.model.ChargeConnector;
 import nz.netvalue.persistence.model.ChargingSession;
 import nz.netvalue.persistence.model.RfIdTag;
+import nz.netvalue.persistence.model.Vehicle;
 import nz.netvalue.persistence.repository.ChargingSessionRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +31,16 @@ public class ChargingSessionServiceImpl implements ChargingSessionService {
     private final ChargingSessionRepository repository;
     private final ChargeConnectorService connectorService;
     private final RfidTagService rfidTagService;
+    private final VehicleService vehicleService;
 
     public ChargingSessionServiceImpl(ChargingSessionRepository repository,
                                       ChargeConnectorService connectorService,
-                                      RfidTagService rfidTagService) {
+                                      RfidTagService rfidTagService,
+                                      VehicleService vehicleService) {
         this.repository = repository;
         this.connectorService = connectorService;
         this.rfidTagService = rfidTagService;
+        this.vehicleService = vehicleService;
     }
 
     @Override
@@ -50,12 +56,31 @@ public class ChargingSessionServiceImpl implements ChargingSessionService {
                 request.getPointSerialNumber(),
                 request.getConnectorNumber());
         RfIdTag rfIdTag = rfidTagService.getByUUID(UUID.fromString(request.getRfIdTagNumber()));
+        Vehicle vehicle = vehicleService.getByRegistrationPlate(request.getVehicleRegistrationPlate());
+        checkSessionAlreadyStarted(request, rfIdTag, vehicle);
 
+        ChargingSession session = createSession(request, connector, rfIdTag, vehicle);
+        return repository.save(session);
+    }
+
+    private void checkSessionAlreadyStarted(StartSessionRequest request, RfIdTag rfIdTag, Vehicle vehicle) {
+        if (repository.findStartedSession(rfIdTag, vehicle).isPresent()) {
+            String message = format("Vehicle with reg.plate [%s] is already charging",
+                    request.getVehicleRegistrationPlate());
+            throw new SessionAlreadyStartedException(message);
+        }
+    }
+
+    private static ChargingSession createSession(StartSessionRequest request,
+                                                 ChargeConnector connector,
+                                                 RfIdTag rfIdTag,
+                                                 Vehicle vehicle) {
         ChargingSession session = new ChargingSession();
         session.setChargeConnector(connector);
         session.setStartTime(request.getDateTime());
         session.setRfIdTag(rfIdTag);
-        return repository.save(session);
+        session.setVehicle(vehicle);
+        return session;
     }
 
     @Transactional

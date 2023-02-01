@@ -18,5 +18,9 @@ post:
   responses:
     201:
       description: Charge connector created
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
     404:
       description: Charge point not found

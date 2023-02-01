@@ -3,11 +3,14 @@ package nz.netvalue.domain.service.impl;
 import nz.netvalue.controller.dto.EndSessionRequest;
 import nz.netvalue.controller.dto.StartSessionRequest;
 import nz.netvalue.domain.exception.ResourceNotFoundException;
+import nz.netvalue.domain.exception.SessionAlreadyStartedException;
 import nz.netvalue.domain.service.ChargeConnectorService;
 import nz.netvalue.domain.service.RfidTagService;
+import nz.netvalue.domain.service.VehicleService;
 import nz.netvalue.persistence.model.ChargeConnector;
 import nz.netvalue.persistence.model.ChargingSession;
 import nz.netvalue.persistence.model.RfIdTag;
+import nz.netvalue.persistence.model.Vehicle;
 import nz.netvalue.persistence.repository.ChargingSessionRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +39,7 @@ class ChargingSessionServiceImplTest {
     private static final long CONNECTOR_NUMBER = 1L;
     private static final LocalDateTime NOW = LocalDateTime.now();
     private static final UUID TAG_NUMBER = UUID.randomUUID();
+    private static final String REG_PLATE = "454fg";
     private static final long SESSION_ID = 2L;
     private static final int METER_VALUE = 15;
 
@@ -51,6 +55,9 @@ class ChargingSessionServiceImplTest {
     @MockBean
     private RfidTagService rfidTagService;
 
+    @MockBean
+    private VehicleService vehicleService;
+
     @Captor
     private ArgumentCaptor<ChargingSession> sessionCaptor;
 
@@ -58,8 +65,8 @@ class ChargingSessionServiceImplTest {
     private ArgumentCaptor<ChargeConnector> connectorCaptor;
 
     @Test
-    @DisplayName("Should find by passed period")
-    void shouldCallFindByDatePeriod() {
+    @DisplayName("Should find all sessions by period")
+    void shouldFindSessionsByPeriod() {
         LocalDate dateFrom = LocalDate.now().minusDays(1);
         LocalDate dateTo = LocalDate.now();
         sut.getChargeSessions(dateFrom, dateTo);
@@ -68,8 +75,8 @@ class ChargingSessionServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should find by period if dateTo is null")
-    void shouldCallFindByPeriodIfDateToIsNull() {
+    @DisplayName("Should find sessions by period if dateTo is null")
+    void shouldFindSessionByPeriodIfDateToIsNull() {
         LocalDate dateFrom = LocalDate.now().minusDays(1);
         sut.getChargeSessions(dateFrom, null);
 
@@ -78,23 +85,37 @@ class ChargingSessionServiceImplTest {
     }
 
     @Test
-    @DisplayName("When create session should save with filled field correctly")
-    void shouldCreateNewSession() {
+    @DisplayName("Should save session with correct field values")
+    void shouldSaveSession() {
         when(connectorService.getConnector(any(), any())).thenReturn(createConnector());
         when(rfidTagService.getByUUID(TAG_NUMBER)).thenReturn(createRfIdTag());
+        when(vehicleService.getByRegistrationPlate(REG_PLATE)).thenReturn(createVehicle());
         sut.startSession(createStartRequest());
 
         verify(repository).save(sessionCaptor.capture());
-        assertEquals(TAG_NUMBER, sessionCaptor.getValue().getRfIdTag().getTagNumber());
-        assertEquals(NOW, sessionCaptor.getValue().getStartTime());
-        assertEquals(CONNECTOR_NUMBER, sessionCaptor.getValue().getChargeConnector().getConnectorNumber());
+        ChargingSession actual = sessionCaptor.getValue();
+        assertEquals(TAG_NUMBER, actual.getRfIdTag().getTagNumber());
+        assertEquals(NOW, actual.getStartTime());
+        assertEquals(CONNECTOR_NUMBER, actual.getChargeConnector().getConnectorNumber());
+        assertEquals(REG_PLATE, actual.getVehicle().getRegistrationPlate());
     }
 
     @Test
-    @DisplayName("Should call save session and update connector meter value")
-    void shouldUpdateSession() {
-        ChargingSession session = new ChargingSession();
-        session.setChargeConnector(createConnector());
+    @DisplayName("Should fail start session if it already started")
+    void shouldFailStartSessionIfAlreadyStarted() {
+        RfIdTag rfIdTag = createRfIdTag();
+        Vehicle vehicle = createVehicle();
+        when(rfidTagService.getByUUID(TAG_NUMBER)).thenReturn(rfIdTag);
+        when(vehicleService.getByRegistrationPlate(REG_PLATE)).thenReturn(vehicle);
+        when(repository.findStartedSession(rfIdTag, vehicle)).thenReturn(Optional.of(createSession()));
+
+        assertThrows(SessionAlreadyStartedException.class, () -> sut.startSession(createStartRequest()));
+    }
+
+    @Test
+    @DisplayName("Should update session and connector meter value")
+    void shouldUpdateSessionAndConnectorMeter() {
+        ChargingSession session = createSession();
         when(repository.findById(SESSION_ID)).thenReturn(Optional.of(session));
         sut.endSession(createEndRequest());
 
@@ -104,16 +125,16 @@ class ChargingSessionServiceImplTest {
     }
 
     @Test
-    @DisplayName("Throws if session not exists")
-    void shouldThrowsSessionNotExists() {
+    @DisplayName("Should fail end session if it doesn't exist")
+    void shouldFailEndSession() {
         when(repository.findById(SESSION_ID)).thenReturn(Optional.empty());
         assertThrows(ResourceNotFoundException.class,
                 () -> sut.endSession(createEndRequest()));
     }
 
     @Test
-    @DisplayName("If session with this end time already ended, nothing have to save")
-    void shouldNotSaveIfAlreadySavedWithEqualEndTime() {
+    @DisplayName("Shouldn't update session when already ended")
+    void shouldNotUpdateSessionIfAlreadyEnded() {
         ChargingSession session = new ChargingSession();
         session.setEndTime(NOW);
 
@@ -134,6 +155,18 @@ class ChargingSessionServiceImplTest {
         return rfIdTag;
     }
 
+    private static Vehicle createVehicle() {
+        Vehicle vehicle = new Vehicle();
+        vehicle.setRegistrationPlate(REG_PLATE);
+        return vehicle;
+    }
+
+    private static ChargingSession createSession() {
+        ChargingSession session = new ChargingSession();
+        session.setChargeConnector(createConnector());
+        return session;
+    }
+
     private static ChargeConnector createConnector() {
         ChargeConnector connector = new ChargeConnector();
         connector.setConnectorNumber(CONNECTOR_NUMBER);
@@ -145,6 +178,7 @@ class ChargingSessionServiceImplTest {
         request.setConnectorNumber(CONNECTOR_NUMBER);
         request.setDateTime(NOW);
         request.setRfIdTagNumber(TAG_NUMBER.toString());
+        request.setVehicleRegistrationPlate(REG_PLATE);
         return request;
     }
 

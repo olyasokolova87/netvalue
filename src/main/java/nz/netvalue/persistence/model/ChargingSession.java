@@ -50,6 +50,13 @@ public class ChargingSession {
     @Column(name = "error_message")
     private String errorMessage;
 
+    /**
+     * Linked vehicle to RFID tag
+     */
+    @OneToOne
+    @JoinColumn(name = "vehicle_id", nullable = false)
+    private Vehicle vehicle;
+
     public Long getId() {
         return id;
     }
@@ -96,5 +103,13 @@ public class ChargingSession {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 }

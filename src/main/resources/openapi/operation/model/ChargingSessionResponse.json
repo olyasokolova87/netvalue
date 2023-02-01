@@ -36,6 +36,24 @@
         "meterValue"
       ]
     },
+    "vehicle": {
+      "type": "object",
+      "description": "Vehicle",
+      "properties": {
+        "vehicleName": {
+          "type": "string",
+          "maxlength": 255
+        },
+        "registrationPlate": {
+          "type": "string",
+          "maxLength": 15
+        }
+      },
+      "required": [
+        "vehicleName",
+        "registrationPlate"
+      ]
+    },
     "startTime": {
       "type": "string"
     },
