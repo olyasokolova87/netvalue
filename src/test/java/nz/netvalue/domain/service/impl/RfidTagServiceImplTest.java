@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = RfidTagServiceImpl.class)
-@DisplayName("Test Rfid tag service")
+@DisplayName("Test service for Rfid tags")
 class RfidTagServiceImplTest {
 
     private static final UUID NUMBER = UUID.randomUUID();
@@ -29,8 +29,8 @@ class RfidTagServiceImplTest {
     private RfidTagRepository repository;
 
     @Test
-    @DisplayName("If RFID tag exists then it returns")
-    void shouldReturnRfIdTagByNumber() {
+    @DisplayName("Should return RFID tag by number")
+    void shouldGetRfIdTagByNumber() {
         when(repository.findByTagNumber(NUMBER)).thenReturn(Optional.of(createTag()));
         RfIdTag actual = sut.getByUUID(NUMBER);
 
@@ -38,8 +38,8 @@ class RfidTagServiceImplTest {
     }
 
     @Test
-    @DisplayName("If RFID tag not exists then throws an exception")
-    void shouldThrow() {
+    @DisplayName("Should fail If RFID tag not found")
+    void shouldFailsIfTagNotFound() {
         when(repository.findByTagNumber(NUMBER)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> sut.getByUUID(NUMBER));

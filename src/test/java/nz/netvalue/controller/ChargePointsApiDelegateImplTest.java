@@ -40,7 +40,7 @@ class ChargePointsApiDelegateImplTest {
     private LocationBuilder locationBuilder;
 
     @Test
-    @DisplayName("Call chargePointService and locationBuilder")
+    @DisplayName("Should call correctly")
     void shouldCallCorrectly() throws URISyntaxException {
         when(chargeConnectorService.addConnectorToPoint(SERIAL_NUMBER, CONNECTOR_NUMBER))
                 .thenReturn(createConnector());
@@ -53,7 +53,7 @@ class ChargePointsApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("Get response with correct location header")
+    @DisplayName("Should get response with location header")
     void shouldGetResponseWitLocationHeader() throws URISyntaxException {
         when(chargeConnectorService.addConnectorToPoint(SERIAL_NUMBER, CONNECTOR_NUMBER))
                 .thenReturn(createConnector());

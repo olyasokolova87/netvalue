@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@DisplayName("Test map version information to response")
+@DisplayName("Test mapping version")
 @SpringBootTest(classes = VersionMapperImpl.class)
 class VersionMapperTest {
 
@@ -21,7 +21,7 @@ class VersionMapperTest {
     private VersionMapperImpl sut;
 
     @Test
-    @DisplayName("When mapped dto fill correctly")
+    @DisplayName("Should map dto to response correctly")
     void shouldMapVersionToResponse() {
         Version version = createVersion();
 

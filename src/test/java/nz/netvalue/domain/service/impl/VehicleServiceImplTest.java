@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@DisplayName("Test service that works with vehicles")
+@DisplayName("Test service for vehicles")
 @SpringBootTest(classes = VehicleServiceImpl.class)
 class VehicleServiceImplTest {
 
@@ -27,8 +27,8 @@ class VehicleServiceImplTest {
     private VehicleRepository repository;
 
     @Test
-    @DisplayName("If vehicle exists then it returns")
-    void shouldReturnVehicleByRegPlate() {
+    @DisplayName("Should return vehicle by registration plate")
+    void shouldGetVehicleByRegPlate() {
         when(repository.findByRegistrationPlate(REG_PLATE)).thenReturn(Optional.of(createVehicle()));
         Vehicle actual = sut.getByRegistrationPlate(REG_PLATE);
 
@@ -37,8 +37,8 @@ class VehicleServiceImplTest {
     }
 
     @Test
-    @DisplayName("If vehicle not exists then throws an exception")
-    void shouldThrow() {
+    @DisplayName("Should fails if vehicle not found")
+    void shouldFailIfVehicleNotFound() {
         when(repository.findByRegistrationPlate(REG_PLATE)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> sut.getByRegistrationPlate(REG_PLATE));

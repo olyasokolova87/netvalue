@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(classes = {ChargingSessionMapperImpl.class, MapperUtils.class})
-@DisplayName("Test mapping of charging sessions")
+@DisplayName("Test mapping charging sessions")
 class ChargingSessionMapperTest {
 
     private static final LocalDateTime START_TIME = LocalDateTime.now().minusHours(1);
@@ -31,7 +31,7 @@ class ChargingSessionMapperTest {
     private ChargingSessionMapper sut;
 
     @Test
-    @DisplayName("Map charging session list from for response correctly")
+    @DisplayName("Should map session list to response correctly")
     void shouldMapResponseList() {
         ChargingSession chargingSession = createSession();
         List<ChargingSessionResponse> actualList = sut.toResponseList(Collections.singletonList(chargingSession));

@@ -33,7 +33,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest(classes = ChargingSessionServiceImpl.class)
-@DisplayName("Test service works with charging session")
+@DisplayName("Test service for charging session")
 class ChargingSessionServiceImplTest {
 
     private static final long CONNECTOR_NUMBER = 1L;

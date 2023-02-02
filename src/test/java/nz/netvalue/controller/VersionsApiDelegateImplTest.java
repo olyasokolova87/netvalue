@@ -31,7 +31,7 @@ class VersionsApiDelegateImplTest {
     private VersionMapper versionMapper;
 
     @Test
-    @DisplayName("Get version API should return Version obejct")
+    @DisplayName("Should return version")
     void shouldGetVersionResponse() {
         when(versionService.get()).thenReturn(new Version());
         when(versionMapper.toResponse(any())).thenReturn(new VersionResponse());

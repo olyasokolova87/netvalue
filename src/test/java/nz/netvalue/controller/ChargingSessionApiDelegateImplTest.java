@@ -27,6 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
+@DisplayName("Test delegate for session API")
 @SpringBootTest(classes = ChargingSessionApiDelegateImpl.class)
 class ChargingSessionApiDelegateImplTest {
 
@@ -45,7 +46,7 @@ class ChargingSessionApiDelegateImplTest {
     private LocationBuilder locationBuilder;
 
     @Test
-    @DisplayName("Get list of charging sessions")
+    @DisplayName("Should return list of charging sessions")
     void shouldReturnSessionListResponse() {
         LocalDate dateFrom = LocalDate.now().minusDays(1);
         LocalDate dateTo = LocalDate.now();
@@ -62,7 +63,7 @@ class ChargingSessionApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("Create charging session successfully")
+    @DisplayName("Should create charging session")
     void shouldCreateNewSession() throws URISyntaxException {
         StartSessionRequest request = new StartSessionRequest();
         when(service.startSession(request)).thenReturn(new ChargingSession());
@@ -78,7 +79,7 @@ class ChargingSessionApiDelegateImplTest {
     }
 
     @Test
-    @DisplayName("End charging session successfully")
+    @DisplayName("Should end charging session")
     void shouldEndSession() {
         EndSessionRequest request = new EndSessionRequest();
         ResponseEntity<Void> actual = sut.endSession(request);

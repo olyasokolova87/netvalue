@@ -18,7 +18,7 @@ class SessionAlreadyStartedAdviceTest {
     private SessionAlreadyStartedAdvice sut;
 
     @Test
-    @DisplayName("Return exception error message")
+    @DisplayName("Should return error message from exception")
     void shouldGetErrorMessageFromException() {
         String errorMessage = sut.resourceNotFoundHandler(new SessionAlreadyStartedException(MESSAGE));
 

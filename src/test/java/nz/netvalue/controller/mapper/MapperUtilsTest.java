@@ -17,7 +17,7 @@ class MapperUtilsTest {
     private MapperUtils sut;
 
     @Test
-    @DisplayName("UUID maps to String correctly")
+    @DisplayName("Should map UUID to String correctly")
     void shouldMapUUIDToString() {
         String expected = "3d2b21cb-64ae-4991-b631-bfa7a388f01c";
         String actual = sut.map(UUID.fromString(expected));

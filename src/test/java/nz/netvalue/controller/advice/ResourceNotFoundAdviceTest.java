@@ -18,7 +18,7 @@ class ResourceNotFoundAdviceTest {
     private ResourceNotFoundAdvice sut;
 
     @Test
-    @DisplayName("Return exception error message")
+    @DisplayName("Should return error message from exception")
     void shouldGetErrorMessageFromException() {
         String errorMessage = sut.resourceNotFoundHandler(new ResourceNotFoundException(MESSAGE));
 

@@ -41,7 +41,7 @@ class ChargeConnectorServiceImplTest {
     private ArgumentCaptor<ChargeConnector> connectorCaptor;
 
     @Test
-    @DisplayName("Save connector have correct chargePoint")
+    @DisplayName("Should save connector to charge point")
     void shouldSaveConnectorWithCorrectPoint() {
         ChargePoint chargePoint = new ChargePoint();
         chargePoint.setId(ID);
@@ -54,8 +54,8 @@ class ChargeConnectorServiceImplTest {
     }
 
     @Test
-    @DisplayName("Throws when connector with number not exists")
-    void shouldThrowsIfConnectorNotFound() {
+    @DisplayName("Should fails when connector not found")
+    void shouldFailsIfConnectorNotFound() {
         when(connectorRepository.findInPointByConnectorNumber(SERIAL_NUMBER, CONNECTOR_NUMBER)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class,
@@ -63,8 +63,8 @@ class ChargeConnectorServiceImplTest {
     }
 
     @Test
-    @DisplayName("Return connector is exists")
-    void shouldGetByNumberIfExists() {
+    @DisplayName("Should return connector if it exists")
+    void shouldGetConnectorByNumber() {
         ChargeConnector expected = new ChargeConnector();
         expected.setConnectorNumber(CONNECTOR_NUMBER);
 
@@ -76,8 +76,8 @@ class ChargeConnectorServiceImplTest {
     }
 
     @Test
-    @DisplayName("Save charge connector with new meter value")
-    void shouldSaveWithNewMeterValue() {
+    @DisplayName("Should save connector with new meter value")
+    void shouldSaveConnectorWithNewMeterValue() {
         ChargeConnector connector = new ChargeConnector();
         int expectedMeterValue = 15;
         sut.updateMeterValue(connector, expectedMeterValue);

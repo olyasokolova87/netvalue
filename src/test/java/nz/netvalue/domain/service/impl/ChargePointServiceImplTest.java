@@ -28,8 +28,8 @@ class ChargePointServiceImplTest {
     private ChargePointRepository repository;
 
     @Test
-    @DisplayName("Return charge point it exists")
-    void shouldGetChargePointWhenItExists() {
+    @DisplayName("Should return charge point")
+    void shouldGetChargePoint() {
         when(repository.findBySerialNumber(SERIAL_NUMBER))
                 .thenReturn(Optional.of(new ChargePoint()));
 
@@ -38,8 +38,8 @@ class ChargePointServiceImplTest {
     }
 
     @Test
-    @DisplayName("Throws if charge point not exists")
-    void shouldThrowWhenChargePointNotExists() {
+    @DisplayName("Should fail if point not found")
+    void shouldFailWhenChargePointNotFound() {
         when(repository.findBySerialNumber(SERIAL_NUMBER))
                 .thenReturn(Optional.empty());
 

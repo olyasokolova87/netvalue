@@ -28,8 +28,8 @@ class UserDetailsServiceImplTest {
     private UserRepository repository;
 
     @Test
-    @DisplayName("Get user by username")
-    void shouldReturnUserByUsername() {
+    @DisplayName("Should return user by username")
+    void shouldGetUserByUsername() {
         when(repository.findByUsername(USERNAME)).thenReturn(Optional.of(createUseDetails()));
         UserDetails actual = sut.loadUserByUsername(USERNAME);
 
@@ -37,7 +37,8 @@ class UserDetailsServiceImplTest {
     }
 
     @Test
-    void shouldThrowsWhenUserNotFound() {
+    @DisplayName("Should fail if user not found")
+    void shouldFailWhenUserNotFound() {
         when(repository.findByUsername(USERNAME)).thenReturn(Optional.empty());
         assertThrows(UsernameNotFoundException.class, () -> sut.loadUserByUsername(USERNAME));
     }

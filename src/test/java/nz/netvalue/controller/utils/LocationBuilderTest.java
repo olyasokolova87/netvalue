@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DisplayName("Test build location URI")
+@DisplayName("Test location URI builder")
 @SpringBootTest(classes = LocationBuilder.class)
 class LocationBuilderTest {
 
@@ -20,7 +20,7 @@ class LocationBuilderTest {
     private LocationBuilder sut;
 
     @Test
-    @DisplayName("Return URI with Entity ID")
+    @DisplayName("Should return URI with Entity ID")
     void shouldReturnUriWithEntityId() throws URISyntaxException {
         URI actual = sut.build(ENTITY_ID);
         URI expected = new URI("http://localhost/" + ENTITY_ID);

@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@DisplayName("Test service for get application and database version")
+@DisplayName("Test service app version")
 @SpringBootTest(classes = VersionServiceImpl.class)
 class VersionServiceImplTest {
 
@@ -21,8 +21,8 @@ class VersionServiceImplTest {
     private Version version;
 
     @Test
-    @DisplayName("Get should return correct database and application versions")
-    void shouldReturnCorrectVersion() {
+    @DisplayName("Should return correct database and application versions")
+    void shouldGetVersion() {
         String expectedApp = "1.0";
         String expectedDb = "2.0";
         when(version.getApplication()).thenReturn(expectedApp);
