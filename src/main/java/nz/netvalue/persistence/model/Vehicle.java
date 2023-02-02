@@ -1,10 +1,15 @@
 package nz.netvalue.persistence.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
  * Vehicles that need to be charged
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "vehicles")
 public class Vehicle {
@@ -28,28 +33,4 @@ public class Vehicle {
      */
     @Column(name = "registration_plate", nullable = false)
     private String registrationPlate;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getVehicleName() {
-        return vehicleName;
-    }
-
-    public void setVehicleName(String vehicleName) {
-        this.vehicleName = vehicleName;
-    }
-
-    public String getRegistrationPlate() {
-        return registrationPlate;
-    }
-
-    public void setRegistrationPlate(String registrationPlate) {
-        this.registrationPlate = registrationPlate;
-    }
 }

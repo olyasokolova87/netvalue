@@ -1,5 +1,6 @@
 package nz.netvalue.domain.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import nz.netvalue.domain.exception.ResourceNotFoundException;
 import nz.netvalue.domain.service.ChargeConnectorService;
 import nz.netvalue.domain.service.ChargePointService;
@@ -13,16 +14,11 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 @Service
+@RequiredArgsConstructor
 public class ChargeConnectorServiceImpl implements ChargeConnectorService {
 
     private final ChargePointService chargePointService;
     private final ChargeConnectorRepository connectorRepository;
-
-    public ChargeConnectorServiceImpl(ChargeConnectorRepository connectorRepository,
-                                      ChargePointService chargePointService) {
-        this.connectorRepository = connectorRepository;
-        this.chargePointService = chargePointService;
-    }
 
     @Override
     public ChargeConnector addConnectorToPoint(String serialNumber, Long connectorNumber) {

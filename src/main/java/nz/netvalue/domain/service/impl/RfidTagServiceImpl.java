@@ -1,5 +1,6 @@
 package nz.netvalue.domain.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import nz.netvalue.domain.exception.ResourceNotFoundException;
 import nz.netvalue.domain.service.RfidTagService;
 import nz.netvalue.persistence.model.RfIdTag;
@@ -12,13 +13,10 @@ import java.util.UUID;
 import static java.lang.String.format;
 
 @Service
+@RequiredArgsConstructor
 public class RfidTagServiceImpl implements RfidTagService {
 
     private final RfidTagRepository repository;
-
-    public RfidTagServiceImpl(RfidTagRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public RfIdTag getByUUID(UUID number) {

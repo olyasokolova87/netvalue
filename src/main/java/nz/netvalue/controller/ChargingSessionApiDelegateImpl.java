@@ -1,5 +1,6 @@
 package nz.netvalue.controller;
 
+import lombok.RequiredArgsConstructor;
 import nz.netvalue.controller.dto.ChargingSessionResponse;
 import nz.netvalue.controller.dto.EndSessionRequest;
 import nz.netvalue.controller.dto.StartSessionRequest;
@@ -16,19 +17,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelegate {
 
     private final ChargingSessionService chargingSessionService;
     private final ChargingSessionMapper sessionMapper;
     private final LocationBuilder locationBuilder;
-
-    public ChargingSessionApiDelegateImpl(ChargingSessionService chargingSessionService,
-                                          ChargingSessionMapper sessionMapper,
-                                          LocationBuilder locationBuilder) {
-        this.chargingSessionService = chargingSessionService;
-        this.sessionMapper = sessionMapper;
-        this.locationBuilder = locationBuilder;
-    }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")

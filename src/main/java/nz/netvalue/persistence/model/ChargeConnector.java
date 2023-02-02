@@ -1,10 +1,15 @@
 package nz.netvalue.persistence.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
  * Connectors in charge point
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "charge_connectors")
 public class ChargeConnector {
@@ -35,36 +40,4 @@ public class ChargeConnector {
     @ManyToOne
     @JoinColumn(name = "charge_point_id")
     private ChargePoint chargePoint;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getConnectorNumber() {
-        return connectorNumber;
-    }
-
-    public void setConnectorNumber(Long connectorNumber) {
-        this.connectorNumber = connectorNumber;
-    }
-
-    public Integer getMeterValue() {
-        return meterValue;
-    }
-
-    public void setMeterValue(Integer meterValue) {
-        this.meterValue = meterValue;
-    }
-
-    public ChargePoint getChargePoint() {
-        return chargePoint;
-    }
-
-    public void setChargePoint(ChargePoint chargePoint) {
-        this.chargePoint = chargePoint;
-    }
 }

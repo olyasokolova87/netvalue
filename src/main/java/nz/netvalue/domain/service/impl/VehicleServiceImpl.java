@@ -1,5 +1,6 @@
 package nz.netvalue.domain.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import nz.netvalue.domain.exception.ResourceNotFoundException;
 import nz.netvalue.domain.service.VehicleService;
 import nz.netvalue.persistence.model.Vehicle;
@@ -11,13 +12,10 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 @Service
+@RequiredArgsConstructor
 public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleRepository repository;
-
-    public VehicleServiceImpl(VehicleRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public Vehicle getByRegistrationPlate(String regPlate) {

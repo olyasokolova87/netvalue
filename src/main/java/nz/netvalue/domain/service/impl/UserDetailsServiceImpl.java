@@ -1,5 +1,6 @@
 package nz.netvalue.domain.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import nz.netvalue.domain.model.UserDetailsImpl;
 import nz.netvalue.persistence.model.User;
 import nz.netvalue.persistence.repository.UserRepository;
@@ -13,13 +14,10 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
-
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

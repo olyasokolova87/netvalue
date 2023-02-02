@@ -1,5 +1,6 @@
 package nz.netvalue.controller;
 
+import lombok.RequiredArgsConstructor;
 import nz.netvalue.controller.dto.ConnectorRequest;
 import nz.netvalue.controller.utils.LocationBuilder;
 import nz.netvalue.domain.service.ChargeConnectorService;
@@ -11,16 +12,11 @@ import org.springframework.stereotype.Component;
 import java.net.URI;
 
 @Component
+@RequiredArgsConstructor
 public class ChargePointsApiDelegateImpl implements ChargePointsApiDelegate {
 
     private final ChargeConnectorService chargeConnectorService;
     private final LocationBuilder locationBuilder;
-
-    public ChargePointsApiDelegateImpl(ChargeConnectorService chargeConnectorService,
-                                       LocationBuilder locationBuilder) {
-        this.chargeConnectorService = chargeConnectorService;
-        this.locationBuilder = locationBuilder;
-    }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")

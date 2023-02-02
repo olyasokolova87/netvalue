@@ -1,11 +1,16 @@
 package nz.netvalue.persistence.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
  * Sessions of charging vehicles
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "charging_sessions")
 public class ChargingSession {
@@ -56,60 +61,4 @@ public class ChargingSession {
     @OneToOne
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public ChargeConnector getChargeConnector() {
-        return chargeConnector;
-    }
-
-    public void setChargeConnector(ChargeConnector chargeConnector) {
-        this.chargeConnector = chargeConnector;
-    }
-
-    public RfIdTag getRfIdTag() {
-        return rfIdTag;
-    }
-
-    public void setRfIdTag(RfIdTag rfIdTag) {
-        this.rfIdTag = rfIdTag;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
 }

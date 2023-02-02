@@ -1,5 +1,6 @@
 package nz.netvalue.domain.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import nz.netvalue.controller.dto.EndSessionRequest;
 import nz.netvalue.controller.dto.StartSessionRequest;
 import nz.netvalue.domain.exception.ResourceNotFoundException;
@@ -26,22 +27,13 @@ import java.util.UUID;
 import static java.lang.String.format;
 
 @Service
+@RequiredArgsConstructor
 public class ChargingSessionServiceImpl implements ChargingSessionService {
 
     private final ChargingSessionRepository repository;
     private final ChargeConnectorService connectorService;
     private final RfidTagService rfidTagService;
     private final VehicleService vehicleService;
-
-    public ChargingSessionServiceImpl(ChargingSessionRepository repository,
-                                      ChargeConnectorService connectorService,
-                                      RfidTagService rfidTagService,
-                                      VehicleService vehicleService) {
-        this.repository = repository;
-        this.connectorService = connectorService;
-        this.rfidTagService = rfidTagService;
-        this.vehicleService = vehicleService;
-    }
 
     @Override
     public List<ChargingSession> getChargeSessions(LocalDate dateFrom, LocalDate dateTo) {

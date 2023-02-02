@@ -1,10 +1,15 @@
 package nz.netvalue.persistence.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
  * Points where vehicles is charging
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "charge_points")
 public class ChargePoint {
@@ -28,28 +33,4 @@ public class ChargePoint {
      */
     @Column(name = "serial_number", nullable = false)
     private String serialNumber;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPointName() {
-        return pointName;
-    }
-
-    public void setPointName(String pointName) {
-        this.pointName = pointName;
-    }
-
-    public String getSerialNumber() {
-        return serialNumber;
-    }
-
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
-    }
 }
