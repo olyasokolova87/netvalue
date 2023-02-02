@@ -13,6 +13,17 @@ spring:
     hibernate:
       ddl-auto: none
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    readinessState:
+      enabled: true
+  server:
+    port: 8082
+
 application:
   version:
     database: 1.0

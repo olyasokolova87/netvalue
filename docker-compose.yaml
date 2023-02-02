@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+
+  charge-stations-app:
+    container_name: charge-stations-app
+    build: .
+    ports:
+      - "9080:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8082/actuator/health | grep UP || exit 1"
+      interval: 1s
+      timeout: 1s
+      retries: 5
+      start_period: 5s

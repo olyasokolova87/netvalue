@@ -27,6 +27,7 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeRequests(auth -> auth
                         .antMatchers("/versions").permitAll()
+                        .antMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated())
                 .userDetailsService(userDetailsService)
                 .httpBasic(httpBasic -> httpBasic
