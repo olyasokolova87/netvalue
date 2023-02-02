@@ -125,6 +125,19 @@ class ChargingSessionServiceImplTest {
     }
 
     @Test
+    @DisplayName("Should update only session if connector meter value is null")
+    void shouldUpdateOnlySessionWhenConnectorMeterIsNull() {
+        ChargingSession session = createSession();
+        when(repository.findById(SESSION_ID)).thenReturn(Optional.of(session));
+        EndSessionRequest endRequest = createEndRequest();
+        endRequest.setMeterValue(null);
+        sut.endSession(endRequest);
+
+        verify(repository).save(session);
+        verifyNoInteractions(connectorService);
+    }
+
+    @Test
     @DisplayName("Should fail end session if it doesn't exist")
     void shouldFailEndSession() {
         when(repository.findById(SESSION_ID)).thenReturn(Optional.empty());
@@ -139,7 +152,7 @@ class ChargingSessionServiceImplTest {
         session.setEndTime(NOW);
 
         EndSessionRequest endRequest = createEndRequest();
-        endRequest.setDateTime(NOW);
+        endRequest.setEndTime(NOW);
         when(repository.findById(SESSION_ID)).thenReturn(Optional.of(session));
 
         sut.endSession(endRequest);
@@ -176,7 +189,7 @@ class ChargingSessionServiceImplTest {
     private static StartSessionRequest createStartRequest() {
         StartSessionRequest request = new StartSessionRequest();
         request.setConnectorNumber(CONNECTOR_NUMBER);
-        request.setDateTime(NOW);
+        request.setStartTime(NOW);
         request.setRfIdTagNumber(TAG_NUMBER.toString());
         request.setVehicleRegistrationPlate(REG_PLATE);
         return request;
@@ -185,7 +198,7 @@ class ChargingSessionServiceImplTest {
     private static EndSessionRequest createEndRequest() {
         EndSessionRequest request = new EndSessionRequest();
         request.setSessionId(SESSION_ID);
-        request.setDateTime(NOW.minusMinutes(1));
+        request.setEndTime(NOW.minusMinutes(1));
         request.setMeterValue(METER_VALUE);
         return request;
     }

@@ -23,7 +23,7 @@
       "format": "int64",
       "description": "Charge connector number"
     },
-    "dateTime": {
+    "startTime": {
       "type": "string",
       "format": "date-time",
       "description": "Date and time when charging session starts"
@@ -31,6 +31,7 @@
   },
   "required": [
     "rfIdTagNumber",
+    "vehicleRegistrationPlate",
     "pointSerialNumber",
     "connectorNumber",
     "dateTime"

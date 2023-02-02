@@ -69,7 +69,7 @@ public class ChargingSessionServiceImpl implements ChargingSessionService {
                                                  Vehicle vehicle) {
         ChargingSession session = new ChargingSession();
         session.setChargeConnector(connector);
-        session.setStartTime(request.getDateTime());
+        session.setStartTime(request.getStartTime());
         session.setRfIdTag(rfIdTag);
         session.setVehicle(vehicle);
         return session;
@@ -79,14 +79,18 @@ public class ChargingSessionServiceImpl implements ChargingSessionService {
     @Override
     public void endSession(EndSessionRequest request) {
         ChargingSession session = getSessionById(request.getSessionId());
-
-        if (session.getEndTime() != null && session.getEndTime().equals(request.getDateTime())) {
+        if (session.getEndTime() != null && session.getEndTime().equals(request.getEndTime())) {
             //already finished, just return
             return;
         }
-        session.setEndTime(request.getDateTime());
-        connectorService.updateMeterValue(session.getChargeConnector(), request.getMeterValue());
+
+        session.setEndTime(request.getEndTime());
+        session.setErrorMessage(request.getErrorMessage());
         repository.save(session);
+
+        if (request.getMeterValue() != null) {
+            connectorService.updateMeterValue(session.getChargeConnector(), request.getMeterValue());
+        }
     }
 
     private ChargingSession getSessionById(Long sessionId) {

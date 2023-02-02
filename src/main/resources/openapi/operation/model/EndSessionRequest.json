@@ -6,18 +6,26 @@
     "sessionId": {
       "type": "integer",
       "format": "int64",
+      "description": "ID of started charging session",
       "min": 0
     },
-    "dateTime": {
+    "endTime": {
       "type": "string",
-      "format": "date-time"
+      "format": "date-time",
+      "description": "Date and time when charging session ends"
     },
     "meterValue": {
       "type": "integer",
+      "description": "Meter value of charges Wh of energy",
       "min": 0
+    },
+    "errorMessage": {
+      "type": "string",
+      "description": "message of error occurred",
+      "maxLength": 1000
     }
   },
   "required": [
-    "number"
+    "sessionId"
   ]
 }

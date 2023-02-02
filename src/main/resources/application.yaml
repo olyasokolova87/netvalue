@@ -12,7 +12,6 @@ spring:
     defer-datasource-initialization: false
     hibernate:
       ddl-auto: none
-      generate_statistics: false
 
 application:
   version:

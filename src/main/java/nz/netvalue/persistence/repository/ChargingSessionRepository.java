@@ -37,11 +37,11 @@ public interface ChargingSessionRepository extends JpaRepository<ChargingSession
      *
      * @param rfIdTag RFID tag
      * @param vehicle vehicle
-     * @return true, if vehicle have started charging with RFID tag
+     * @return true, if vehicle have not ended session RFID tag
      */
     @Query("select c from ChargingSession c " +
             "where c.rfIdTag = :rfIdTag and c.vehicle = :vehicle " +
-            "and c.endTime is null")
+            "and c.endTime is null and c.errorMessage is null")
     Optional<ChargingSession> findStartedSession(@Param("rfIdTag") RfIdTag rfIdTag,
                                                  @Param("vehicle") Vehicle vehicle);
 }

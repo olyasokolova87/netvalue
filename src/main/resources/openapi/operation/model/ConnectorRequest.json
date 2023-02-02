@@ -6,6 +6,7 @@
     "connectorNumber": {
       "type": "integer",
       "format": "int64",
+      "description": "The number of created connector in current charge point",
       "min": 0
     }
   },

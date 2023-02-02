@@ -3,6 +3,9 @@
   "title": "ChargingSessionResponse",
   "description": "Response with charging session",
   "properties": {
+    "id": {
+      "type": "integer"
+    },
     "rfIdTag": {
       "type": "object",
       "description": "RFID tag",
@@ -65,8 +68,11 @@
     }
   },
   "required": [
+    "id",
     "rfIdTag",
     "connector",
-    "startDate"
+    "startDate",
+    "vehicle",
+    "startTime"
   ]
 }

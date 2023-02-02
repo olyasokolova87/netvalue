@@ -6,6 +6,17 @@ Authorization: Basic smirnova smirnova
 
 {
   "sessionId": "1",
-  "dateTime": "2022-01-01T12:30:00",
+  "endTime": "2022-01-01T12:30:00",
   "meterValue": 15
+}
+
+### Send PUT request: end charging session with error
+PUT http://localhost:8080/charging-sessions
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic smirnova smirnova
+
+{
+  "sessionId": "2",
+  "errorMessage": "Some error"
 }
