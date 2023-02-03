@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: development
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:h2:mem:charge-stations
@@ -16,6 +18,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+  liquibase:
+    contexts: ${spring.profiles.active}
 
 management:
   endpoints:
