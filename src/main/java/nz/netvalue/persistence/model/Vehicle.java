@@ -2,6 +2,7 @@ package nz.netvalue.persistence.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -25,12 +26,14 @@ public class Vehicle {
     /**
      * Vehicles name
      */
+    @Length(max = 255)
     @Column(name = "vehicle_name", nullable = false)
     private String vehicleName;
 
     /**
      * Vehicles registration plate
      */
+    @Length(max = 15)
     @Column(name = "registration_plate", nullable = false)
     private String registrationPlate;
 }

@@ -2,6 +2,7 @@ package nz.netvalue.persistence.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -52,6 +53,7 @@ public class ChargingSession {
     /**
      * Error message when charge session can not complete
      */
+    @Length(max = 500)
     @Column(name = "error_message")
     private String errorMessage;
 

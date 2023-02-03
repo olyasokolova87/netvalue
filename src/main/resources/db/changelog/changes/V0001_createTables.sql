@@ -81,10 +81,10 @@ comment
 
 create table charge_connectors
 (
-    id               identity     not null primary key,
-    connector_number varchar(100) not null,
+    id               identity not null primary key,
+    connector_number int      not null,
     charge_point_id  int references charge_points (id),
-    meter_value      int          not null
+    meter_value      int      not null
 );
 comment
     on table charge_connectors is 'Connectors in charge point';

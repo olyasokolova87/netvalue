@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -28,6 +29,7 @@ public class RfIdTag {
     /**
      * RFID tag name
      */
+    @Length(max = 255)
     @Column(name = "tag_name", nullable = false)
     private String tagName;
 

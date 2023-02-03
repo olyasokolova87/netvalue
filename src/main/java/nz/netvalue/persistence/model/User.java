@@ -2,6 +2,7 @@ package nz.netvalue.persistence.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -25,18 +26,21 @@ public class User {
     /**
      * User name
      */
+    @Length(max = 300)
     @Column(name = "name", nullable = false)
     private String name;
 
     /**
      * User login
      */
+    @Length(max = 40)
     @Column(name = "username", nullable = false)
     private String username;
 
     /**
      * User password
      */
+    @Length(max = 72)
     @Column(name = "user_password", nullable = false)
     private String password;
 
