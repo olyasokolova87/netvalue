@@ -1,11 +1,12 @@
-package nz.netvalue.controller;
+package nz.netvalue.controller.impl;
 
 import lombok.RequiredArgsConstructor;
-import nz.netvalue.controller.dto.ChargingSessionResponse;
-import nz.netvalue.controller.dto.EndSessionRequest;
-import nz.netvalue.controller.dto.StartSessionRequest;
+import nz.netvalue.controller.ChargingSessionsApiDelegate;
 import nz.netvalue.controller.mapper.ChargingSessionMapper;
-import nz.netvalue.controller.utils.LocationBuilder;
+import nz.netvalue.controller.model.ChargingSessionResponse;
+import nz.netvalue.controller.model.EndSessionRequest;
+import nz.netvalue.controller.model.StartSessionRequest;
+import nz.netvalue.controller.utils.LocationHeaderBuilder;
 import nz.netvalue.domain.service.ChargingSessionService;
 import nz.netvalue.persistence.model.ChargingSession;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
 
     private final ChargingSessionService chargingSessionService;
     private final ChargingSessionMapper sessionMapper;
-    private final LocationBuilder locationBuilder;
+    private final LocationHeaderBuilder locationHeaderBuilder;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -37,7 +38,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<Void> startSession(StartSessionRequest request) {
         ChargingSession created = chargingSessionService.startSession(request);
-        URI location = locationBuilder.build(created.getId());
+        URI location = locationHeaderBuilder.build(created.getId());
         return ResponseEntity.created(location).build();
     }
 

@@ -1,7 +1,7 @@
-package nz.netvalue.controller;
+package nz.netvalue.controller.impl;
 
-import nz.netvalue.controller.dto.VersionResponse;
 import nz.netvalue.controller.mapper.VersionMapper;
+import nz.netvalue.controller.model.VersionResponse;
 import nz.netvalue.domain.model.version.Version;
 import nz.netvalue.domain.service.VersionService;
 import org.junit.jupiter.api.DisplayName;

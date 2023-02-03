@@ -1,8 +1,9 @@
-package nz.netvalue.controller;
+package nz.netvalue.controller.impl;
 
 import lombok.RequiredArgsConstructor;
-import nz.netvalue.controller.dto.ConnectorRequest;
-import nz.netvalue.controller.utils.LocationBuilder;
+import nz.netvalue.controller.ChargePointsApiDelegate;
+import nz.netvalue.controller.model.ConnectorRequest;
+import nz.netvalue.controller.utils.LocationHeaderBuilder;
 import nz.netvalue.domain.service.ChargeConnectorService;
 import nz.netvalue.persistence.model.ChargeConnector;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +17,14 @@ import java.net.URI;
 public class ChargePointsApiDelegateImpl implements ChargePointsApiDelegate {
 
     private final ChargeConnectorService chargeConnectorService;
-    private final LocationBuilder locationBuilder;
+    private final LocationHeaderBuilder locationHeaderBuilder;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> addConnector(String serialNumber, ConnectorRequest connectorRequest) {
         ChargeConnector created = chargeConnectorService.addConnectorToPoint(serialNumber,
                 connectorRequest.getConnectorNumber());
-        URI location = locationBuilder.build(created.getId());
+        URI location = locationHeaderBuilder.build(created.getId());
 
         return ResponseEntity.created(location).build();
     }

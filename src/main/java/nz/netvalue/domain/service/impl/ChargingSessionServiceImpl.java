@@ -1,8 +1,8 @@
 package nz.netvalue.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import nz.netvalue.controller.dto.EndSessionRequest;
-import nz.netvalue.controller.dto.StartSessionRequest;
+import nz.netvalue.controller.model.EndSessionRequest;
+import nz.netvalue.controller.model.StartSessionRequest;
 import nz.netvalue.domain.exception.ResourceNotFoundException;
 import nz.netvalue.domain.exception.SessionAlreadyStartedException;
 import nz.netvalue.domain.service.ChargeConnectorService;

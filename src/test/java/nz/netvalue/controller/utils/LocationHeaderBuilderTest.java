@@ -11,13 +11,13 @@ import java.net.URISyntaxException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Test location URI builder")
-@SpringBootTest(classes = LocationBuilder.class)
-class LocationBuilderTest {
+@SpringBootTest(classes = LocationHeaderBuilder.class)
+class LocationHeaderBuilderTest {
 
     private static final long ENTITY_ID = 1L;
 
     @Autowired
-    private LocationBuilder sut;
+    private LocationHeaderBuilder sut;
 
     @Test
     @DisplayName("Should return URI with Entity ID")

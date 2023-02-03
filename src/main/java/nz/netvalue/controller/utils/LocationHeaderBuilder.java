@@ -5,9 +5,18 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+/**
+ * Builder for POST request location header
+ */
 @Component
-public class LocationBuilder {
+public class LocationHeaderBuilder {
 
+    /**
+     * Build location header
+     *
+     * @param entityId ID of entity
+     * @return URI with location of creation entity
+     */
     public URI build(Long entityId) {
         return ServletUriComponentsBuilder
                 .fromCurrentRequest()

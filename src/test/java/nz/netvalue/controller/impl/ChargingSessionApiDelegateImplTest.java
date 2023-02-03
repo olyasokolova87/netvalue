@@ -1,10 +1,10 @@
-package nz.netvalue.controller;
+package nz.netvalue.controller.impl;
 
-import nz.netvalue.controller.dto.ChargingSessionResponse;
-import nz.netvalue.controller.dto.EndSessionRequest;
-import nz.netvalue.controller.dto.StartSessionRequest;
 import nz.netvalue.controller.mapper.ChargingSessionMapper;
-import nz.netvalue.controller.utils.LocationBuilder;
+import nz.netvalue.controller.model.ChargingSessionResponse;
+import nz.netvalue.controller.model.EndSessionRequest;
+import nz.netvalue.controller.model.StartSessionRequest;
+import nz.netvalue.controller.utils.LocationHeaderBuilder;
 import nz.netvalue.domain.service.ChargingSessionService;
 import nz.netvalue.persistence.model.ChargingSession;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +43,7 @@ class ChargingSessionApiDelegateImplTest {
     private ChargingSessionMapper mapper;
 
     @MockBean
-    private LocationBuilder locationBuilder;
+    private LocationHeaderBuilder locationHeaderBuilder;
 
     @Test
     @DisplayName("Should return list of charging sessions")
@@ -67,7 +67,7 @@ class ChargingSessionApiDelegateImplTest {
     void shouldCreateNewSession() throws URISyntaxException {
         StartSessionRequest request = new StartSessionRequest();
         when(service.startSession(request)).thenReturn(new ChargingSession());
-        when(locationBuilder.build(any())).thenReturn(new URI(SOME_URI));
+        when(locationHeaderBuilder.build(any())).thenReturn(new URI(SOME_URI));
 
         ResponseEntity<Void> actual = sut.startSession(request);
 

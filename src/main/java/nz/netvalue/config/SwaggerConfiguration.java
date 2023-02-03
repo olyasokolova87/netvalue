@@ -1,4 +1,4 @@
-package nz.netvalue.config.swagger;
+package nz.netvalue.config;
 
 import lombok.RequiredArgsConstructor;
 import nz.netvalue.domain.model.version.Version;
@@ -17,6 +17,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 
+/**
+ * Configuration for swagger
+ */
 @Configuration
 @EnableSwagger2
 @RequiredArgsConstructor

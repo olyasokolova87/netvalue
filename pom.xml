@@ -184,7 +184,7 @@
                             <library>spring-boot</library>
                             <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
                             <apiPackage>nz.netvalue.controller</apiPackage>
-                            <modelPackage>nz.netvalue.controller.dto</modelPackage>
+                            <modelPackage>nz.netvalue.controller.model</modelPackage>
                             <invokerPackage>nz.netvalue.controller.invoker</invokerPackage>
 
                             <configOptions>

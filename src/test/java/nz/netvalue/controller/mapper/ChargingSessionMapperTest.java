@@ -1,6 +1,6 @@
 package nz.netvalue.controller.mapper;
 
-import nz.netvalue.controller.dto.ChargingSessionResponse;
+import nz.netvalue.controller.model.ChargingSessionResponse;
 import nz.netvalue.persistence.model.ChargeConnector;
 import nz.netvalue.persistence.model.ChargingSession;
 import nz.netvalue.persistence.model.RfIdTag;

@@ -1,6 +1,6 @@
 package nz.netvalue.controller.mapper;
 
-import nz.netvalue.controller.dto.VersionResponse;
+import nz.netvalue.controller.model.VersionResponse;
 import nz.netvalue.domain.model.version.Version;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

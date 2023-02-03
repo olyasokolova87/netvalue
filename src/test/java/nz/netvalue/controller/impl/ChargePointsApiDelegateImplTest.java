@@ -1,7 +1,7 @@
-package nz.netvalue.controller;
+package nz.netvalue.controller.impl;
 
-import nz.netvalue.controller.dto.ConnectorRequest;
-import nz.netvalue.controller.utils.LocationBuilder;
+import nz.netvalue.controller.model.ConnectorRequest;
+import nz.netvalue.controller.utils.LocationHeaderBuilder;
 import nz.netvalue.domain.service.ChargeConnectorService;
 import nz.netvalue.persistence.model.ChargeConnector;
 import org.junit.jupiter.api.DisplayName;
@@ -37,19 +37,19 @@ class ChargePointsApiDelegateImplTest {
     private ChargeConnectorService chargeConnectorService;
 
     @MockBean
-    private LocationBuilder locationBuilder;
+    private LocationHeaderBuilder locationHeaderBuilder;
 
     @Test
     @DisplayName("Should call correctly")
     void shouldCallCorrectly() throws URISyntaxException {
         when(chargeConnectorService.addConnectorToPoint(SERIAL_NUMBER, CONNECTOR_NUMBER))
                 .thenReturn(createConnector());
-        when(locationBuilder.build(ID)).thenReturn(new URI(SOME_URI));
+        when(locationHeaderBuilder.build(ID)).thenReturn(new URI(SOME_URI));
 
         sut.addConnector(SERIAL_NUMBER, createRequest());
 
         verify(chargeConnectorService).addConnectorToPoint(SERIAL_NUMBER, CONNECTOR_NUMBER);
-        verify(locationBuilder).build(ID);
+        verify(locationHeaderBuilder).build(ID);
     }
 
     @Test
@@ -57,7 +57,7 @@ class ChargePointsApiDelegateImplTest {
     void shouldGetResponseWitLocationHeader() throws URISyntaxException {
         when(chargeConnectorService.addConnectorToPoint(SERIAL_NUMBER, CONNECTOR_NUMBER))
                 .thenReturn(createConnector());
-        when(locationBuilder.build(ID)).thenReturn(new URI(SOME_URI));
+        when(locationHeaderBuilder.build(ID)).thenReturn(new URI(SOME_URI));
 
         ResponseEntity<Void> actualResponse = sut.addConnector(SERIAL_NUMBER, createRequest());
 

@@ -1,7 +1,7 @@
 package nz.netvalue.domain.service;
 
-import nz.netvalue.controller.dto.EndSessionRequest;
-import nz.netvalue.controller.dto.StartSessionRequest;
+import nz.netvalue.controller.model.EndSessionRequest;
+import nz.netvalue.controller.model.StartSessionRequest;
 import nz.netvalue.persistence.model.ChargingSession;
 
 import java.time.LocalDate;
