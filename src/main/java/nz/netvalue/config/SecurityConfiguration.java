@@ -25,9 +25,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
+                .headers().frameOptions().disable().and()
                 .authorizeRequests(auth -> auth
                         .antMatchers("/versions").permitAll()
                         .antMatchers("/actuator/**").permitAll()
+                        .antMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated())
                 .userDetailsService(userDetailsService)
                 .httpBasic(httpBasic -> httpBasic
