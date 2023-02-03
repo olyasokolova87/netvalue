@@ -13,6 +13,10 @@ spring:
     hibernate:
       ddl-auto: none
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 management:
   endpoints:
     web:

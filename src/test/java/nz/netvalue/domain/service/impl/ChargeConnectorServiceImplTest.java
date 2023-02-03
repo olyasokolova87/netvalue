@@ -56,7 +56,7 @@ class ChargeConnectorServiceImplTest {
     @Test
     @DisplayName("Should fails when connector not found")
     void shouldFailsIfConnectorNotFound() {
-        when(connectorRepository.findInPointByConnectorNumber(SERIAL_NUMBER, CONNECTOR_NUMBER)).thenReturn(Optional.empty());
+        when(connectorRepository.findByChargePointAndNumber(SERIAL_NUMBER, CONNECTOR_NUMBER)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class,
                 () -> sut.getConnector(SERIAL_NUMBER, CONNECTOR_NUMBER));
@@ -68,7 +68,7 @@ class ChargeConnectorServiceImplTest {
         ChargeConnector expected = new ChargeConnector();
         expected.setConnectorNumber(CONNECTOR_NUMBER);
 
-        when(connectorRepository.findInPointByConnectorNumber(SERIAL_NUMBER, CONNECTOR_NUMBER))
+        when(connectorRepository.findByChargePointAndNumber(SERIAL_NUMBER, CONNECTOR_NUMBER))
                 .thenReturn(Optional.of(expected));
 
         ChargeConnector actual = sut.getConnector(SERIAL_NUMBER, CONNECTOR_NUMBER);

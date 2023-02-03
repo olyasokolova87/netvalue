@@ -31,7 +31,7 @@ public class ChargeConnectorServiceImpl implements ChargeConnectorService {
     @Override
     public ChargeConnector getConnector(String pointSerialNumber, Long connectorNumber) {
         Optional<ChargeConnector> optional =
-                connectorRepository.findInPointByConnectorNumber(pointSerialNumber, connectorNumber);
+                connectorRepository.findByChargePointAndNumber(pointSerialNumber, connectorNumber);
         if (optional.isEmpty()) {
             String message = format("Charge connector with number = [%s] not exists", connectorNumber);
             throw new ResourceNotFoundException(message);

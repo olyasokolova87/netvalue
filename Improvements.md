@@ -7,5 +7,5 @@ In developing process I had some questions, that in real process I would like to
 3. Create entity out of domain service
 4. Create some logout button in swagger-ui page to switch users
 5. Add validation of unique charge connectors number in charge point
-6. Repository tests
+6. Repository tests/e2e
 7. Create user in sql scripts only for dev profile
