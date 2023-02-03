@@ -1,11 +1,15 @@
 # Improvements
 
-In developing process I had some questions, that in real process I would like to discuss with business%%
+**Business and prod environment:**
 
-1. Time should save in client zone or server zone (business needs)
-2. Move some logics from session service to smaller parts as port of some adapter
-3. Create entity out of domain service
-4. Create some logout button in swagger-ui page to switch users
-5. Add validation of unique charge connectors number in charge point
-6. Repository tests/e2e
-7. Create user in sql scripts only for dev profile
+1. Time should save in client zone or server zone? (business needs)
+2. If services will grow, split service logic from session service to smaller parts
+3. Add domain models when needed, and mapping from persistence to domain and back
+4. postgres more applicable for prod environment rather then h2
+5. Depends on database size, add indexes on most selective table columns
+
+**Technical debt:**
+
+1. Create some logout button in swagger-ui page to switch users?
+2. e2e tests
+3. > expand monitoring using prometheus

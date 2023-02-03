@@ -1,8 +1,8 @@
 package nz.netvalue.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import nz.netvalue.domain.exception.ResourceNotFoundException;
 import nz.netvalue.domain.service.ChargePointService;
+import nz.netvalue.exception.ResourceNotFoundException;
 import nz.netvalue.persistence.model.ChargePoint;
 import nz.netvalue.persistence.repository.ChargePointRepository;
 import org.springframework.stereotype.Component;

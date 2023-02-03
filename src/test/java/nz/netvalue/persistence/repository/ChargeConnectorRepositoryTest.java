@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
@@ -31,5 +32,21 @@ class ChargeConnectorRepositoryTest {
         Optional<ChargeConnector> actual = sut.findByChargePointAndNumber("1", 1L);
 
         assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Should return true if charge connector exists")
+    void shouldReturnTrueWhenConnectorExists() {
+        Integer count = sut.countByChargePointIdAndConnectorNumber(1L, 1L);
+
+        assertEquals(1, count);
+    }
+
+    @Test
+    @DisplayName("Should return false if charge connector not exists")
+    void shouldReturnFalseWhenConnectorNotExists() {
+        Integer count = sut.countByChargePointIdAndConnectorNumber(1L, 13L);
+
+        assertEquals(0, count);
     }
 }

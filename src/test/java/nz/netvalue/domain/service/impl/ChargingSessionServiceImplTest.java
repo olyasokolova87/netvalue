@@ -2,11 +2,12 @@ package nz.netvalue.domain.service.impl;
 
 import nz.netvalue.controller.model.EndSessionRequest;
 import nz.netvalue.controller.model.StartSessionRequest;
-import nz.netvalue.domain.exception.ResourceNotFoundException;
-import nz.netvalue.domain.exception.SessionAlreadyStartedException;
-import nz.netvalue.domain.service.ChargeConnectorService;
 import nz.netvalue.domain.service.RfidTagService;
 import nz.netvalue.domain.service.VehicleService;
+import nz.netvalue.domain.service.connector.GetConnectorService;
+import nz.netvalue.domain.service.connector.UpdateConnectorService;
+import nz.netvalue.exception.ResourceNotFoundException;
+import nz.netvalue.exception.SessionAlreadyStartedException;
 import nz.netvalue.persistence.model.ChargeConnector;
 import nz.netvalue.persistence.model.ChargingSession;
 import nz.netvalue.persistence.model.RfIdTag;
@@ -50,7 +51,10 @@ class ChargingSessionServiceImplTest {
     private ChargingSessionRepository repository;
 
     @MockBean
-    private ChargeConnectorService connectorService;
+    private GetConnectorService getConnectorService;
+
+    @MockBean
+    private UpdateConnectorService updateConnectorService;
 
     @MockBean
     private RfidTagService rfidTagService;
@@ -87,7 +91,7 @@ class ChargingSessionServiceImplTest {
     @Test
     @DisplayName("Should save session with correct field values")
     void shouldSaveSession() {
-        when(connectorService.getConnector(any(), any())).thenReturn(createConnector());
+        when(getConnectorService.getConnector(any(), any())).thenReturn(createConnector());
         when(rfidTagService.getByUUID(TAG_NUMBER)).thenReturn(createRfIdTag());
         when(vehicleService.getByRegistrationPlate(REG_PLATE)).thenReturn(createVehicle());
         sut.startSession(createStartRequest());
@@ -120,7 +124,7 @@ class ChargingSessionServiceImplTest {
         sut.endSession(createEndRequest());
 
         verify(repository).save(session);
-        verify(connectorService).updateMeterValue(connectorCaptor.capture(), eq(METER_VALUE));
+        verify(updateConnectorService).updateMeterValue(connectorCaptor.capture(), eq(METER_VALUE));
         assertEquals(CONNECTOR_NUMBER, connectorCaptor.getValue().getConnectorNumber());
     }
 
@@ -134,7 +138,7 @@ class ChargingSessionServiceImplTest {
         sut.endSession(endRequest);
 
         verify(repository).save(session);
-        verifyNoInteractions(connectorService);
+        verifyNoInteractions(getConnectorService);
     }
 
     @Test
@@ -159,7 +163,7 @@ class ChargingSessionServiceImplTest {
 
         verify(repository).findById(SESSION_ID);
         verifyNoMoreInteractions(repository);
-        verifyNoInteractions(connectorService);
+        verifyNoInteractions(updateConnectorService);
     }
 
     private static RfIdTag createRfIdTag() {

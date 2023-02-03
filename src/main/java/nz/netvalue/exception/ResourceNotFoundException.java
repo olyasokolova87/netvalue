@@ -1,5 +1,8 @@
-package nz.netvalue.domain.exception;
+package nz.netvalue.exception;
 
+/**
+ * Throws when entity not found
+ */
 public class ResourceNotFoundException extends RuntimeException {
 
     public ResourceNotFoundException(String message) {

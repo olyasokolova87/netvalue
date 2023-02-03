@@ -86,6 +86,8 @@ create table charge_connectors
     charge_point_id  int references charge_points (id),
     meter_value      int      not null
 );
+create unique index UIDX_Connectors_Number_Point on charge_connectors (charge_point_id, connector_number);
+
 comment
     on table charge_connectors is 'Connectors in charge point';
 comment

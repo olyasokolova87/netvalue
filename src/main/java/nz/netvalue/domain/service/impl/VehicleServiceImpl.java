@@ -1,8 +1,8 @@
 package nz.netvalue.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import nz.netvalue.domain.exception.ResourceNotFoundException;
 import nz.netvalue.domain.service.VehicleService;
+import nz.netvalue.exception.ResourceNotFoundException;
 import nz.netvalue.persistence.model.Vehicle;
 import nz.netvalue.persistence.repository.VehicleRepository;
 import org.springframework.stereotype.Service;

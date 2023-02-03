@@ -3,12 +3,13 @@ package nz.netvalue.domain.service.impl;
 import lombok.RequiredArgsConstructor;
 import nz.netvalue.controller.model.EndSessionRequest;
 import nz.netvalue.controller.model.StartSessionRequest;
-import nz.netvalue.domain.exception.ResourceNotFoundException;
-import nz.netvalue.domain.exception.SessionAlreadyStartedException;
-import nz.netvalue.domain.service.ChargeConnectorService;
 import nz.netvalue.domain.service.ChargingSessionService;
 import nz.netvalue.domain.service.RfidTagService;
 import nz.netvalue.domain.service.VehicleService;
+import nz.netvalue.domain.service.connector.GetConnectorService;
+import nz.netvalue.domain.service.connector.UpdateConnectorService;
+import nz.netvalue.exception.ResourceNotFoundException;
+import nz.netvalue.exception.SessionAlreadyStartedException;
 import nz.netvalue.persistence.model.ChargeConnector;
 import nz.netvalue.persistence.model.ChargingSession;
 import nz.netvalue.persistence.model.RfIdTag;
@@ -31,7 +32,8 @@ import static java.lang.String.format;
 public class ChargingSessionServiceImpl implements ChargingSessionService {
 
     private final ChargingSessionRepository repository;
-    private final ChargeConnectorService connectorService;
+    private final GetConnectorService getConnectorService;
+    private final UpdateConnectorService updateConnectorService;
     private final RfidTagService rfidTagService;
     private final VehicleService vehicleService;
 
@@ -44,7 +46,7 @@ public class ChargingSessionServiceImpl implements ChargingSessionService {
 
     @Override
     public ChargingSession startSession(StartSessionRequest request) {
-        ChargeConnector connector = connectorService.getConnector(
+        ChargeConnector connector = getConnectorService.getConnector(
                 request.getPointSerialNumber(),
                 request.getConnectorNumber());
         RfIdTag rfIdTag = rfidTagService.getByUUID(UUID.fromString(request.getRfIdTagNumber()));
@@ -89,7 +91,7 @@ public class ChargingSessionServiceImpl implements ChargingSessionService {
         repository.save(session);
 
         if (request.getMeterValue() != null) {
-            connectorService.updateMeterValue(session.getChargeConnector(), request.getMeterValue());
+            updateConnectorService.updateMeterValue(session.getChargeConnector(), request.getMeterValue());
         }
     }
 

@@ -26,4 +26,13 @@ public interface ChargeConnectorRepository extends JpaRepository<ChargeConnector
             "and c.chargePoint.serialNumber = :pointNumber")
     Optional<ChargeConnector> findByChargePointAndNumber(@Param("pointNumber") String pointSerialNumber,
                                                          @Param("connectorNumber") Long connectorNumber);
+
+    /**
+     * Get count charge connectors with number already exists in point
+     *
+     * @param chargePointId   ID of charge point
+     * @param connectorNumber connector number
+     * @return count connectors
+     */
+    Integer countByChargePointIdAndConnectorNumber(Long chargePointId, Long connectorNumber);
 }

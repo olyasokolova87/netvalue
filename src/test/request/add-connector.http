@@ -5,5 +5,5 @@ Content-Type: application/json
 Authorization: Basic admin smirnova
 
 {
-  "connectorNumber": 1
+  "connectorNumber": 13
 }

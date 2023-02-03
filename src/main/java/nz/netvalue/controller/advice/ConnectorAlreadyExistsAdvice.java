@@ -1,6 +1,6 @@
 package nz.netvalue.controller.advice;
 
-import nz.netvalue.exception.SessionAlreadyStartedException;
+import nz.netvalue.exception.ConnectorAlreadyCreatedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Handle SessionAlreadyStartedException
+ * Handle ConnectorAlreadyCreatedException
  */
 @ControllerAdvice
-public class SessionAlreadyStartedAdvice {
+public class ConnectorAlreadyExistsAdvice {
 
     @ResponseBody
-    @ExceptionHandler(SessionAlreadyStartedException.class)
+    @ExceptionHandler(ConnectorAlreadyCreatedException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    String resourceNotFoundHandler(SessionAlreadyStartedException ex) {
+    String resourceNotFoundHandler(ConnectorAlreadyCreatedException ex) {
         return ex.getMessage();
     }
 }

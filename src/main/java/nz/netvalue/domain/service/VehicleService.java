@@ -1,5 +1,6 @@
 package nz.netvalue.domain.service;
 
+import nz.netvalue.exception.ResourceNotFoundException;
 import nz.netvalue.persistence.model.Vehicle;
 
 /**
@@ -12,7 +13,7 @@ public interface VehicleService {
      *
      * @param regPlate registration plate
      * @return Vehicle
-     * If vehicle not exists, throws {@link nz.netvalue.domain.exception.ResourceNotFoundException}
+     * If vehicle not exists, throws {@link ResourceNotFoundException}
      */
     Vehicle getByRegistrationPlate(String regPlate);
 }

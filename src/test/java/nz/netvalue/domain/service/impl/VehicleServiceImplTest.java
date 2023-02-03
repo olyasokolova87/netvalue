@@ -1,6 +1,6 @@
 package nz.netvalue.domain.service.impl;
 
-import nz.netvalue.domain.exception.ResourceNotFoundException;
+import nz.netvalue.exception.ResourceNotFoundException;
 import nz.netvalue.persistence.model.Vehicle;
 import nz.netvalue.persistence.repository.VehicleRepository;
 import org.junit.jupiter.api.DisplayName;

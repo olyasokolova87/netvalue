@@ -1,8 +1,8 @@
 package nz.netvalue.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import nz.netvalue.domain.exception.ResourceNotFoundException;
 import nz.netvalue.domain.service.RfidTagService;
+import nz.netvalue.exception.ResourceNotFoundException;
 import nz.netvalue.persistence.model.RfIdTag;
 import nz.netvalue.persistence.repository.RfidTagRepository;
 import org.springframework.stereotype.Service;
