@@ -1,4 +1,4 @@
-package nz.netvalue.domain.service.util;
+package nz.netvalue.domain.service.utils;
 
 import org.junit.jupiter.api.Test;
 
@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class DateTimeConverterChronicTest {
+class DateTimeConverterTest {
 
-    private final DateTimeConverterChronic sut = new DateTimeConverterChronic();
+    private final DateTimeConverter sut = new DateTimeConverter();
 
     @Test
     void testDate() {

@@ -1,4 +1,4 @@
-package nz.netvalue.domain.service.util;
+package nz.netvalue.domain.service.utils;
 
 import org.junit.jupiter.api.Test;
 
@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class DateTimeConverterPrettyTimeTest {
+class DateTimeConverterChronicTest {
 
-    private final DateTimeConverterPrettyTime sut = new DateTimeConverterPrettyTime();
+    private final DateTimeConverterChronic sut = new DateTimeConverterChronic();
 
     @Test
     void testDate() {
@@ -24,5 +24,4 @@ class DateTimeConverterPrettyTimeTest {
 
         assertEquals(LocalDateTime.of(2020, 3, 5, 13, 10), actual);
     }
-
 }

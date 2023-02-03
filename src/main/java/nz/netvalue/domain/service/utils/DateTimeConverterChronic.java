@@ -1,7 +1,7 @@
-package nz.netvalue.domain.service.util;
+package nz.netvalue.domain.service.utils;
 
 import com.mdimension.jchronic.Chronic;
-import nz.netvalue.domain.service.util.exception.DateParseException;
+import nz.netvalue.domain.service.utils.exception.DateParseException;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;

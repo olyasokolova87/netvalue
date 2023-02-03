@@ -1,4 +1,4 @@
-package nz.netvalue.domain.service.util.exception;
+package nz.netvalue.domain.service.utils.exception;
 
 public class DateParseException extends RuntimeException {
 

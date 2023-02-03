@@ -1,6 +1,6 @@
-package nz.netvalue.domain.service.util;
+package nz.netvalue.domain.service.utils;
 
-import nz.netvalue.domain.service.util.exception.DateParseException;
+import nz.netvalue.domain.service.utils.exception.DateParseException;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;

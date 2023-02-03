@@ -1,6 +1,6 @@
-package nz.netvalue.domain.service.util;
+package nz.netvalue.domain.service.utils;
 
-import nz.netvalue.domain.service.util.exception.DateParseException;
+import nz.netvalue.domain.service.utils.exception.DateParseException;
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 
 import java.time.LocalDateTime;
