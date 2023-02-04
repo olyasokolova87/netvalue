@@ -3,7 +3,7 @@ package nz.netvalue.controller.impl;
 import nz.netvalue.controller.mapper.VersionMapper;
 import nz.netvalue.controller.model.VersionResponse;
 import nz.netvalue.domain.model.version.Version;
-import nz.netvalue.domain.service.VersionService;
+import nz.netvalue.domain.service.version.VersionService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import nz.netvalue.controller.VersionsApiDelegate;
 import nz.netvalue.controller.mapper.VersionMapper;
 import nz.netvalue.controller.model.VersionResponse;
-import nz.netvalue.domain.service.VersionService;
+import nz.netvalue.domain.service.version.VersionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
