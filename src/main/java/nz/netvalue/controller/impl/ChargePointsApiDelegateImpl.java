@@ -1,5 +1,6 @@
 package nz.netvalue.controller.impl;
 
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import nz.netvalue.controller.ChargePointsApiDelegate;
 import nz.netvalue.controller.model.ConnectorRequest;
@@ -21,6 +22,7 @@ public class ChargePointsApiDelegateImpl implements ChargePointsApiDelegate {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
+    @Timed(value = "add.connector")
     public ResponseEntity<Void> addConnector(String serialNumber, ConnectorRequest connectorRequest) {
         ChargeConnector created = connectorService.addConnectorToPoint(serialNumber,
                 connectorRequest.getConnectorNumber());

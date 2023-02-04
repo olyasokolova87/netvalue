@@ -1,5 +1,6 @@
 package nz.netvalue.controller.impl;
 
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import nz.netvalue.controller.ChargingSessionsApiDelegate;
 import nz.netvalue.controller.mapper.ChargingSessionMapper;
@@ -31,6 +32,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
+    @Timed(value = "get.charge.sessions")
     public ResponseEntity<List<ChargingSessionResponse>> getChargeSessions(LocalDate dateFrom, LocalDate dateTo) {
         List<ChargingSession> sessions = getChargeSessions.getChargeSessions(dateFrom, dateTo);
 
@@ -40,6 +42,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
 
     @Override
     @PreAuthorize("hasRole('CUSTOMER')")
+    @Timed(value = "start.session")
     public ResponseEntity<Void> startSession(StartSessionRequest request) {
         ChargingSession created = startSessionService.startSession(request);
         URI location = locationHeaderBuilder.build(created.getId());
@@ -48,6 +51,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
 
     @Override
     @PreAuthorize("hasRole('CUSTOMER')")
+    @Timed(value = "end.session")
     public ResponseEntity<Void> endSession(EndSessionRequest request) {
         endSessionService.endSession(request);
         return ResponseEntity.ok().build();
