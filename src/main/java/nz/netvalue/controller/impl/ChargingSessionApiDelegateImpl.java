@@ -7,7 +7,9 @@ import nz.netvalue.controller.model.ChargingSessionResponse;
 import nz.netvalue.controller.model.EndSessionRequest;
 import nz.netvalue.controller.model.StartSessionRequest;
 import nz.netvalue.controller.utils.LocationHeaderBuilder;
-import nz.netvalue.domain.service.ChargingSessionService;
+import nz.netvalue.domain.service.session.EndSessionService;
+import nz.netvalue.domain.service.session.GetSessionService;
+import nz.netvalue.domain.service.session.StartSessionService;
 import nz.netvalue.persistence.model.ChargingSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,14 +23,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelegate {
 
-    private final ChargingSessionService chargingSessionService;
+    private final GetSessionService getChargeSessions;
+    private final StartSessionService startSessionService;
+    private final EndSessionService endSessionService;
     private final ChargingSessionMapper sessionMapper;
     private final LocationHeaderBuilder locationHeaderBuilder;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ChargingSessionResponse>> getChargeSessions(LocalDate dateFrom, LocalDate dateTo) {
-        List<ChargingSession> sessions = chargingSessionService.getChargeSessions(dateFrom, dateTo);
+        List<ChargingSession> sessions = getChargeSessions.getChargeSessions(dateFrom, dateTo);
 
         List<ChargingSessionResponse> responses = sessionMapper.toResponseList(sessions);
         return ResponseEntity.ok(responses);
@@ -37,7 +41,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
     @Override
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<Void> startSession(StartSessionRequest request) {
-        ChargingSession created = chargingSessionService.startSession(request);
+        ChargingSession created = startSessionService.startSession(request);
         URI location = locationHeaderBuilder.build(created.getId());
         return ResponseEntity.created(location).build();
     }
@@ -45,7 +49,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
     @Override
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<Void> endSession(EndSessionRequest request) {
-        chargingSessionService.endSession(request);
+        endSessionService.endSession(request);
         return ResponseEntity.ok().build();
     }
 }

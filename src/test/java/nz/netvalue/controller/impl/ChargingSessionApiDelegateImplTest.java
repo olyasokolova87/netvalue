@@ -5,7 +5,9 @@ import nz.netvalue.controller.model.ChargingSessionResponse;
 import nz.netvalue.controller.model.EndSessionRequest;
 import nz.netvalue.controller.model.StartSessionRequest;
 import nz.netvalue.controller.utils.LocationHeaderBuilder;
-import nz.netvalue.domain.service.ChargingSessionService;
+import nz.netvalue.domain.service.session.EndSessionService;
+import nz.netvalue.domain.service.session.GetSessionService;
+import nz.netvalue.domain.service.session.StartSessionService;
 import nz.netvalue.persistence.model.ChargingSession;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @DisplayName("Test delegate for session API")
@@ -37,7 +40,13 @@ class ChargingSessionApiDelegateImplTest {
     private ChargingSessionApiDelegateImpl sut;
 
     @MockBean
-    private ChargingSessionService service;
+    private GetSessionService getSessionService;
+
+    @MockBean
+    private StartSessionService startSessionService;
+
+    @MockBean
+    private EndSessionService endSessionService;
 
     @MockBean
     private ChargingSessionMapper mapper;
@@ -50,7 +59,7 @@ class ChargingSessionApiDelegateImplTest {
     void shouldReturnSessionListResponse() {
         LocalDate dateFrom = LocalDate.now().minusDays(1);
         LocalDate dateTo = LocalDate.now();
-        when(service.getChargeSessions(dateFrom, dateTo))
+        when(getSessionService.getChargeSessions(dateFrom, dateTo))
                 .thenReturn(Collections.singletonList(new ChargingSession()));
         when(mapper.toResponseList(anyList()))
                 .thenReturn(Collections.singletonList(new ChargingSessionResponse()));
@@ -66,7 +75,7 @@ class ChargingSessionApiDelegateImplTest {
     @DisplayName("Should create charging session")
     void shouldCreateNewSession() throws URISyntaxException {
         StartSessionRequest request = new StartSessionRequest();
-        when(service.startSession(request)).thenReturn(new ChargingSession());
+        when(startSessionService.startSession(request)).thenReturn(new ChargingSession());
         when(locationHeaderBuilder.build(any())).thenReturn(new URI(SOME_URI));
 
         ResponseEntity<Void> actual = sut.startSession(request);
@@ -84,6 +93,7 @@ class ChargingSessionApiDelegateImplTest {
         EndSessionRequest request = new EndSessionRequest();
         ResponseEntity<Void> actual = sut.endSession(request);
 
+        verify(endSessionService).endSession(request);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
     }
 }
