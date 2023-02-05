@@ -7,31 +7,86 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
- * Easy solution: to check all known patterns
+ * First solution: generate all variations of patterns and check all
  * <p>
  * Disadvantages:
- * - Have to add new format if it is not included
- * - At start no guarantee all patterns will be included
+ * - Have to add new pattern if it's not included
+ * - Time zone have to process separately
  * <p>
- * My suggestions always put date format in contract, and you don't have to build a nlp :)
+ * My suggestions always put date format in contract :)
  */
-public class DateTimeConverter {
+public final class DateTimeConverter {
 
-    private final String[] patterns = {
-            "yyyy-MM-dd HH:mm",
-            "yyyy/MM/dd",
-            // here have to add many and many patterns
+    private static final String BASE_SEPARATOR = "\\$";
+    private static final String[] DATE_SEPARATORS = {"-", "/", "."};
+    private static final String[] TIME_SEPARATORS = {":", "/", "."};
+
+    private static final String[] SOURCE_DATE_PATTERNS = {
+            "yyyy$MM$dd",
+            "dd$MM$yyyy",
+            "MM$dd$yyyy",
+            "MM$yyyy",
+            "yyyy$MM",
+            "yyyy"
     };
 
+    private static final String[] SOURCE_TIME_PATTERNS = {
+            "HH$mm$ss.SSS",
+            "HH$mm$ss",
+            "HH$mm"
+    };
+
+    private static final Set<String> PATTERNS = new LinkedHashSet<>();
+
+    static {
+        // add date patterns
+        Set<String> datePatterns = buildPatterns(SOURCE_DATE_PATTERNS, DATE_SEPARATORS);
+        PATTERNS.addAll(datePatterns);
+        // add time patterns
+        Set<String> timePatterns = buildPatterns(SOURCE_TIME_PATTERNS, TIME_SEPARATORS);
+        PATTERNS.addAll(timePatterns);
+
+        // add merged patterns with date and time
+        for (String datePattern : datePatterns) {
+            for (String timePattern : timePatterns) {
+                addMerged(datePattern, timePattern);
+                addMerged(timePattern, datePattern);
+            }
+        }
+    }
+
+    private static Set<String> buildPatterns(String[] sourceDatePatterns, String[] separatedDate) {
+        Set<String> datePatterns = new LinkedHashSet<>();
+        for (String pattern : sourceDatePatterns) {
+            for (String s : separatedDate) {
+                String value = pattern.replaceAll(BASE_SEPARATOR, s);
+                datePatterns.add(value);
+            }
+        }
+        return datePatterns;
+    }
+
+    private static void addMerged(String datePattern, String timePattern) {
+        PATTERNS.add(datePattern + ' ' + timePattern);
+        PATTERNS.add(datePattern + "'T'" + timePattern);
+    }
+
+    /**
+     * Parse date from string
+     *
+     * @param dateString string with date
+     * @return date
+     */
     public LocalDateTime parse(String dateString) {
         try {
-            Date date = DateUtils.parseDate(dateString, patterns);
+            Date date = DateUtils.parseDateStrictly(dateString, PATTERNS.toArray(String[]::new));
             return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
         } catch (ParseException e) {
             throw new DateParseException(e);
         }
     }
-
 }
