@@ -1,22 +1,20 @@
 ### Send PUT request: end charging session
-PUT http://localhost:8080/charging-sessions
+PUT http://localhost:8080/charging-sessions/1
 Accept: application/json
 Content-Type: application/json
 Authorization: Basic smirnova smirnova
 
 {
-  "sessionId": "1",
   "endTime": "2022-01-01T12:30:00",
   "meterValue": 15
 }
 
 ### Send PUT request: end charging session with error
-PUT http://localhost:8080/charging-sessions
+PUT http://localhost:8080/charging-sessions/2
 Accept: application/json
 Content-Type: application/json
 Authorization: Basic smirnova smirnova
 
 {
-  "sessionId": "2",
   "errorMessage": "Some error"
 }

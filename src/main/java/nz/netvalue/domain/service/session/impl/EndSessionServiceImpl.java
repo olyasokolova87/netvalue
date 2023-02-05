@@ -23,8 +23,8 @@ public class EndSessionServiceImpl implements EndSessionService {
 
     @Transactional
     @Override
-    public void endSession(EndSessionRequest request) {
-        ChargingSession session = getSessionById(request.getSessionId());
+    public void endSession(Long sessionId, EndSessionRequest request) {
+        ChargingSession session = getSessionById(sessionId);
         if (session.getEndTime() != null && session.getEndTime().equals(request.getEndTime())) {
             //already finished, just return
             return;

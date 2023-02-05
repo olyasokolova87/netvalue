@@ -11,10 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.List.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -34,7 +34,7 @@ class ChargingSessionMapperTest {
     @DisplayName("Should map session list to response correctly")
     void shouldMapResponseList() {
         ChargingSession chargingSession = createSession();
-        List<ChargingSessionResponse> actualList = sut.toResponseList(Collections.singletonList(chargingSession));
+        List<ChargingSessionResponse> actualList = sut.toResponseList(of(chargingSession));
 
         assertEquals(1, actualList.size());
         ChargingSessionResponse actualResponse = actualList.get(0);

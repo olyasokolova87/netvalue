@@ -9,9 +9,11 @@ paths:
   /versions:
     $ref: operation/versions.yaml
   /charge-points/{serialNumber}/connectors:
-    $ref: operation/charge-points-add-connector.yaml
+    $ref: operation/charge-points-id-connector.yaml
   /charging-sessions:
     $ref: operation/charging-sessions.yaml
+  /charging-sessions/{sessionId}:
+    $ref: operation/charging-sessions-id.yaml
 
 components:
   securitySchemes:

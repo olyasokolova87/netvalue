@@ -24,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelegate {
 
-    private final GetSessionService getChargeSessions;
+    private final GetSessionService getChargeSessionService;
     private final StartSessionService startSessionService;
     private final EndSessionService endSessionService;
     private final ChargingSessionMapper sessionMapper;
@@ -34,7 +34,7 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
     @PreAuthorize("hasRole('ADMIN')")
     @Timed(value = "get.charge.sessions")
     public ResponseEntity<List<ChargingSessionResponse>> getChargeSessions(LocalDate dateFrom, LocalDate dateTo) {
-        List<ChargingSession> sessions = getChargeSessions.getChargeSessions(dateFrom, dateTo);
+        List<ChargingSession> sessions = getChargeSessionService.getChargeSessions(dateFrom, dateTo);
 
         List<ChargingSessionResponse> responses = sessionMapper.toResponseList(sessions);
         return ResponseEntity.ok(responses);
@@ -52,8 +52,8 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
     @Override
     @PreAuthorize("hasRole('CUSTOMER')")
     @Timed(value = "end.session")
-    public ResponseEntity<Void> endSession(EndSessionRequest request) {
-        endSessionService.endSession(request);
+    public ResponseEntity<Void> endSession(Long sessionId, EndSessionRequest request) {
+        endSessionService.endSession(sessionId, request);
         return ResponseEntity.ok().build();
     }
 }

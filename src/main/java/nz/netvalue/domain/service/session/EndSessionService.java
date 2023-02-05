@@ -10,7 +10,8 @@ public interface EndSessionService {
     /**
      * End charging session
      *
-     * @param request end session request
+     * @param sessionId charging session ID
+     * @param request   end session request
      */
-    void endSession(EndSessionRequest request);
+    void endSession(Long sessionId, EndSessionRequest request);
 }

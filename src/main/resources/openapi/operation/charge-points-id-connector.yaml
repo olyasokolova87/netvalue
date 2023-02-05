@@ -11,6 +11,7 @@ post:
   operationId: addConnector
   description: "Add connector to existing charge point"
   requestBody:
+    required: true
     content:
       application/json:
         schema:
@@ -20,6 +21,8 @@ post:
       description: OK
     201:
       description: Charge connector created
+    400:
+      description: Bad request
     401:
       description: Unauthorized
     403:

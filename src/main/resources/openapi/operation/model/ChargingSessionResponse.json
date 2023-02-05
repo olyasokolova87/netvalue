@@ -4,7 +4,8 @@
   "description": "Response with charging session",
   "properties": {
     "id": {
-      "type": "integer"
+      "type": "integer",
+      "format": "int64"
     },
     "rfIdTag": {
       "type": "object",

@@ -20,9 +20,9 @@ import org.springframework.http.ResponseEntity;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 
+import static java.util.List.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -60,9 +60,9 @@ class ChargingSessionApiDelegateImplTest {
         LocalDate dateFrom = LocalDate.now().minusDays(1);
         LocalDate dateTo = LocalDate.now();
         when(getSessionService.getChargeSessions(dateFrom, dateTo))
-                .thenReturn(Collections.singletonList(new ChargingSession()));
+                .thenReturn(of(new ChargingSession()));
         when(mapper.toResponseList(anyList()))
-                .thenReturn(Collections.singletonList(new ChargingSessionResponse()));
+                .thenReturn(of(new ChargingSessionResponse()));
 
         ResponseEntity<List<ChargingSessionResponse>> actual = sut.getChargeSessions(dateFrom, dateTo);
 
@@ -91,9 +91,9 @@ class ChargingSessionApiDelegateImplTest {
     @DisplayName("Should end charging session")
     void shouldEndSession() {
         EndSessionRequest request = new EndSessionRequest();
-        ResponseEntity<Void> actual = sut.endSession(request);
+        ResponseEntity<Void> actual = sut.endSession(2L, request);
 
-        verify(endSessionService).endSession(request);
+        verify(endSessionService).endSession(2L, request);
         assertEquals(HttpStatus.OK, actual.getStatusCode());
     }
 }

@@ -1,13 +1,10 @@
 package nz.netvalue.domain.service.session.impl;
 
 import nz.netvalue.controller.model.EndSessionRequest;
-import nz.netvalue.controller.model.StartSessionRequest;
 import nz.netvalue.domain.service.connector.UpdateConnectorService;
 import nz.netvalue.exception.ResourceNotFoundException;
 import nz.netvalue.persistence.model.ChargeConnector;
 import nz.netvalue.persistence.model.ChargingSession;
-import nz.netvalue.persistence.model.RfIdTag;
-import nz.netvalue.persistence.model.Vehicle;
 import nz.netvalue.persistence.repository.ChargingSessionRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -32,8 +28,6 @@ class EndSessionServiceImplTest {
 
     private static final long CONNECTOR_NUMBER = 1L;
     private static final LocalDateTime NOW = LocalDateTime.now();
-    private static final UUID TAG_NUMBER = UUID.randomUUID();
-    private static final String REG_PLATE = "454fg";
     private static final long SESSION_ID = 2L;
     private static final int METER_VALUE = 15;
 
@@ -54,7 +48,7 @@ class EndSessionServiceImplTest {
     void shouldUpdateSessionAndConnectorMeter() {
         ChargingSession session = createSession();
         when(repository.findById(SESSION_ID)).thenReturn(Optional.of(session));
-        sut.endSession(createEndRequest());
+        sut.endSession(SESSION_ID, createEndRequest());
 
         verify(repository).findById(SESSION_ID);
         verify(repository).save(session);
@@ -69,7 +63,7 @@ class EndSessionServiceImplTest {
         when(repository.findById(SESSION_ID)).thenReturn(Optional.of(session));
         EndSessionRequest endRequest = createEndRequest();
         endRequest.setMeterValue(null);
-        sut.endSession(endRequest);
+        sut.endSession(SESSION_ID, endRequest);
 
         verify(repository).findById(SESSION_ID);
         verify(repository).save(session);
@@ -81,7 +75,7 @@ class EndSessionServiceImplTest {
     void shouldFailEndSession() {
         when(repository.findById(SESSION_ID)).thenReturn(Optional.empty());
         assertThrows(ResourceNotFoundException.class,
-                () -> sut.endSession(createEndRequest()));
+                () -> sut.endSession(SESSION_ID, createEndRequest()));
     }
 
     @Test
@@ -94,23 +88,11 @@ class EndSessionServiceImplTest {
         endRequest.setEndTime(NOW);
         when(repository.findById(SESSION_ID)).thenReturn(Optional.of(session));
 
-        sut.endSession(endRequest);
+        sut.endSession(SESSION_ID, endRequest);
 
         verify(repository).findById(SESSION_ID);
         verifyNoMoreInteractions(repository);
         verifyNoInteractions(updateConnectorService);
-    }
-
-    private static RfIdTag createRfIdTag() {
-        RfIdTag rfIdTag = new RfIdTag();
-        rfIdTag.setTagNumber(TAG_NUMBER);
-        return rfIdTag;
-    }
-
-    private static Vehicle createVehicle() {
-        Vehicle vehicle = new Vehicle();
-        vehicle.setRegistrationPlate(REG_PLATE);
-        return vehicle;
     }
 
     private static ChargingSession createSession() {
@@ -125,18 +107,8 @@ class EndSessionServiceImplTest {
         return connector;
     }
 
-    private static StartSessionRequest createStartRequest() {
-        StartSessionRequest request = new StartSessionRequest();
-        request.setConnectorNumber(CONNECTOR_NUMBER);
-        request.setStartTime(NOW);
-        request.setRfIdTagNumber(TAG_NUMBER.toString());
-        request.setVehicleRegistrationPlate(REG_PLATE);
-        return request;
-    }
-
     private static EndSessionRequest createEndRequest() {
         EndSessionRequest request = new EndSessionRequest();
-        request.setSessionId(SESSION_ID);
         request.setEndTime(NOW.minusMinutes(1));
         request.setMeterValue(METER_VALUE);
         return request;

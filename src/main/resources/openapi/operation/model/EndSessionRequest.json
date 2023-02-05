@@ -3,12 +3,6 @@
   "title": "EndSessionRequest",
   "description": "Request for end charging session",
   "properties": {
-    "sessionId": {
-      "type": "integer",
-      "format": "int64",
-      "description": "ID of started charging session",
-      "min": 0
-    },
     "endTime": {
       "type": "string",
       "format": "date-time",
@@ -24,8 +18,5 @@
       "description": "message of error occurred",
       "maxLength": 1000
     }
-  },
-  "required": [
-    "sessionId"
-  ]
+  }
 }
