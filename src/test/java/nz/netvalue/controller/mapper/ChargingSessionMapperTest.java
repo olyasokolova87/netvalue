@@ -27,6 +27,7 @@ class ChargingSessionMapperTest {
     private static final String TAG_NAME = "rfid";
     private static final Long CONNECTOR_NUMBER = 2L;
     private static final UUID TAG_NUMBER = UUID.randomUUID();
+
     @Autowired
     private ChargingSessionMapper sut;
 

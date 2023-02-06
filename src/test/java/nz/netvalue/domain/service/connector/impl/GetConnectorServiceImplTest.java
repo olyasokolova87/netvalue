@@ -2,7 +2,6 @@ package nz.netvalue.domain.service.connector.impl;
 
 import nz.netvalue.exception.ResourceNotFoundException;
 import nz.netvalue.persistence.model.ChargeConnector;
-import nz.netvalue.persistence.model.ChargePoint;
 import nz.netvalue.persistence.repository.ChargeConnectorRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,6 @@ class GetConnectorServiceImplTest {
 
     private static final long CONNECTOR_NUMBER = 1L;
     private static final String SERIAL_NUMBER = "1";
-    private static final long ID = 2L;
 
     @Autowired
     private GetConnectorServiceImpl sut;
@@ -52,9 +50,4 @@ class GetConnectorServiceImplTest {
         assertEquals(CONNECTOR_NUMBER, actual.getConnectorNumber());
     }
 
-    private static ChargePoint createPoint() {
-        ChargePoint chargePoint = new ChargePoint();
-        chargePoint.setId(ID);
-        return chargePoint;
-    }
 }

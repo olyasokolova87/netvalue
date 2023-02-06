@@ -28,7 +28,7 @@ class ChargingSessionRepositoryTest {
     private ChargingSessionRepository sut;
 
     @Test
-    @DisplayName("Should return emopty if started session not found")
+    @DisplayName("Should return empty if started session not found")
     void shouldReturnEmptyIfStartedSessionNotFound() {
         RfIdTag rfIdTag = testEntityManager.find(RfIdTag.class, 1L);
         Vehicle vehicle = testEntityManager.find(Vehicle.class, 1L);
