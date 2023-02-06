@@ -6,6 +6,7 @@ This is application that manages charge points used to charge electric vehicles.
 # Getting Started
 
 ### 1. Open project as maven project
+Use JDK 11
 
 ### 2. Run project installation
 
