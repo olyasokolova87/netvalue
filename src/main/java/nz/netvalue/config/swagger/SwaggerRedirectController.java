@@ -1,4 +1,4 @@
-package nz.netvalue.controller;
+package nz.netvalue.config.swagger;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
