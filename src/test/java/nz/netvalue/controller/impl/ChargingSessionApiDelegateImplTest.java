@@ -20,11 +20,11 @@ import org.springframework.http.ResponseEntity;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.List.of;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.verify;
@@ -55,20 +55,37 @@ class ChargingSessionApiDelegateImplTest {
     private LocationHeaderBuilder locationHeaderBuilder;
 
     @Test
-    @DisplayName("Should return list of charging sessions")
+    @DisplayName("Should return session list and getLastModified header")
     void shouldReturnSessionListResponse() {
         LocalDate dateFrom = LocalDate.now().minusDays(1);
         LocalDate dateTo = LocalDate.now();
-        when(getSessionService.getChargeSessions(dateFrom, dateTo))
-                .thenReturn(of(new ChargingSession()));
-        when(mapper.toResponseList(anyList()))
-                .thenReturn(of(new ChargingSessionResponse()));
+        ChargingSession chargingSession = new ChargingSession();
+        LocalDateTime now = LocalDateTime.now();
+        chargingSession.setLastModifiedDate(now);
+
+        when(getSessionService.getChargeSessions(dateFrom, dateTo)).thenReturn(of(chargingSession));
+        when(mapper.toResponseList(anyList())).thenReturn(of(new ChargingSessionResponse()));
 
         ResponseEntity<List<ChargingSessionResponse>> actual = sut.getChargeSessions(dateFrom, dateTo);
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertTrue(actual.getHeaders().getLastModified() > 0);
         assertNotNull(actual.getBody());
         assertEquals(1, actual.getBody().size());
+    }
+
+    @Test
+    @DisplayName("Should return empty list of charging sessions")
+    void shouldReturnEmptyList() {
+        when(getSessionService.getChargeSessions(null, null)).thenReturn(of());
+        when(mapper.toResponseList(anyList())).thenReturn(of());
+
+        ResponseEntity<List<ChargingSessionResponse>> actual = sut.getChargeSessions(null, null);
+
+        assertEquals(HttpStatus.OK, actual.getStatusCode());
+        assertEquals(-1, actual.getHeaders().getLastModified());
+        assertNotNull(actual.getBody());
+        assertEquals(0, actual.getBody().size());
     }
 
     @Test

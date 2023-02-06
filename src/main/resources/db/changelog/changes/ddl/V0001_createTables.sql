@@ -35,7 +35,7 @@ create table vehicles
 (
     id                 identity     not null primary key,
     vehicle_name       varchar(255) not null,
-    registration_plate varchar(15) not null unique
+    registration_plate varchar(15)  not null unique
 );
 comment
     on table vehicles is 'vehicles that need to be charge';
@@ -102,6 +102,8 @@ comment
 create table charging_sessions
 (
     id                  identity  not null primary key,
+    created_date        timestamp not null,
+    last_modified_date  timestamp not null,
     start_time          timestamp not null,
     end_time            timestamp,
     charge_connector_id int references charge_connectors (id),
@@ -113,6 +115,10 @@ comment
     on table charging_sessions is 'Sessions of charging vehicles';
 comment
     on column charging_sessions.id is 'Session ID';
+comment
+    on column charging_sessions.created_date is 'Date of create session';
+comment
+    on column charging_sessions.last_modified_date is 'Date of modified session';
 comment
     on column charging_sessions.start_time is 'Date and time when session starts';
 comment

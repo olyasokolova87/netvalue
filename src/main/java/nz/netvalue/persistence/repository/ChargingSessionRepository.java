@@ -23,12 +23,13 @@ public interface ChargingSessionRepository extends JpaRepository<ChargingSession
      *
      * @param startPeriod start period date
      * @param endPeriod   end period date
-     * @return list of charging sessions
+     * @return list of charging sessions order by createdDate desc
      */
     @Query("select c from ChargingSession c " +
             "where :startPeriod is null or " +
             "(c.startTime between :startPeriod and :endPeriod " +
-            "and (c.endTime is null or c.endTime between :startPeriod and :endPeriod))")
+            "and (c.endTime is null or c.endTime between :startPeriod and :endPeriod)) " +
+            "order by c.createdDate desc")
     List<ChargingSession> findByDatePeriod(@Param("startPeriod") LocalDateTime startPeriod,
                                            @Param("endPeriod") LocalDateTime endPeriod);
 

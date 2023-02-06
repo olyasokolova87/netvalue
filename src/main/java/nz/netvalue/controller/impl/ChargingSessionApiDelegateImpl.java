@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Component
@@ -37,7 +39,11 @@ public class ChargingSessionApiDelegateImpl implements ChargingSessionsApiDelega
         List<ChargingSession> sessions = getChargeSessionService.getChargeSessions(dateFrom, dateTo);
 
         List<ChargingSessionResponse> responses = sessionMapper.toResponseList(sessions);
-        return ResponseEntity.ok(responses);
+        if (sessions.isEmpty()) {
+            return ResponseEntity.ok(responses);
+        }
+        ZonedDateTime lastModified = sessions.get(0).getLastModifiedDate().atZone(ZoneId.systemDefault());
+        return ResponseEntity.ok().lastModified(lastModified).body(responses);
     }
 
     @Override

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * Version information about application, that stores in application.yaml
+ * Version information about application
  */
 @Component
 public class Version {
