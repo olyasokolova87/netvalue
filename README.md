@@ -18,7 +18,7 @@ During installation, controllers and it's models will be generated from API spec
 ### 3. Run application using Docker
 
 Execute command ```./environment.sh``` <br/>
-The application will be available at: ```localhost:8080```
+The application will be available at: ```http://localhost:8080```
 
 **NOTE:_You have to first install and run [Docker](https://www.docker.com/) on your machine_**
 
@@ -26,19 +26,19 @@ The application will be available at: ```localhost:8080```
 
 You can use:
 
-- Swagger-ui, it's available at: ```localhost:8080/swagger-ui```
-- Samples of REST-api in source code at: ```/src/test/request```
+- Swagger-ui, it's available at: ```http://localhost:8080/swagger-ui```
+- From Intellij IDEA you can run samples of REST-api in source code at: ```/src/test/request```
 
 ### 5. Monitoring
 
-When the application works, [prometheus](https://prometheus.io/) is scraping productivity metrics.
-You can see all metrics in [Grafana](https://grafana.com/), that is available at: ```localhost:3000```
+When the application works, [prometheus](https://prometheus.io/) is scraping productivity metrics.<br/>
+And you can see metrics in [Grafana](https://grafana.com/) dashboards, at: ```http://localhost:3000/dashboards```
 
 ### 6. Local debug
 
 You can also run application locally, for example using Intellij IDEA, just run saved
 configuration ```ChargePointsApplication```<br/>
 
-Application will be available at: ```localhost:8080```<br/>
-Swagger-ui will be available at: ```localhost:8080/swagger-ui``` <br/>
+Application will be available at: ```http://localhost:8080```<br/>
+Swagger-ui will be available at: ```http://localhost:8080/swagger-ui``` <br/>
 **NOTE: Monitoring doesn't work, when use local start** 
