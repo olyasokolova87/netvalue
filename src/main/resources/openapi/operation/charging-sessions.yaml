@@ -53,6 +53,6 @@ post:
     403:
       description: Forbidden
     404:
-      description: Connector not found
+      description: Resource not found (vehicle | connector | RFID tag)
     409:
       description: Session already started

@@ -10,6 +10,7 @@ import nz.netvalue.persistence.repository.ChargingSessionRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static java.lang.String.format;
@@ -30,7 +31,7 @@ public class EndSessionServiceImpl implements EndSessionService {
             return;
         }
 
-        session.setEndTime(request.getEndTime());
+        session.setEndTime(request.getEndTime() == null ? LocalDateTime.now() : request.getEndTime());
         session.setErrorMessage(request.getErrorMessage());
         repository.save(session);
 

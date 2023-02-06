@@ -29,3 +29,5 @@ post:
       description: Forbidden
     404:
       description: Charge point not found
+    409:
+      description: Connector already exists
