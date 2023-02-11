@@ -1,5 +1,9 @@
 # Improvements
 
+**Business logic:**
+
+1. Save meter value in session, not in connector. It will provide statistic per client (not total used kWh in connector)
+
 **Business and prod environment:**
 
 1. Time should save in client zone or server zone? (business needs)
